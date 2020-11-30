@@ -18,6 +18,7 @@ export function useForm(initialFValues, validateOnChange = false, validate) {
     }
 
     const resetForm = () => {
+        console.log("reset to: ",initialFValues)
         setValues(initialFValues);
         setErrors({})
     }

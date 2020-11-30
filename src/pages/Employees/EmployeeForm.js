@@ -11,24 +11,20 @@ const type_idItems = [
     { id: 't.i.', title: 'T.I.' },
 ]
 
-export const getDepartmentCollection = ()=>([
-    { id: '1', title: 'Limonar' },
-    { id: '2', title: 'Marketing' },
-    { id: '3', title: 'Accounting' },
-    { id: '4', title: 'HR' },
-])
-
 const initialFValues = {
     id: 0,
     name: '',
     last_name: '',
-    email: '',
-    mobile: '',
+    college: '',
+    id_Number: '',
     address: '',
-    type_id: 'c.c.',
-    departmentId: '',
-    hireDate: new Date(),
-    isPermanent: false,
+    type_id: 'C.C.',
+    neighborhoodId: '',
+    eps: '',
+    //Si queremos poner calendario al final, poner new Date aqui
+    registerDate: '',
+    //isPermanent: false,
+    hour : ''
 }
 
 export default function EmployeeForm() {
@@ -40,12 +36,12 @@ export default function EmployeeForm() {
         /*
         if ('fullName' in fieldValues)
             temp.fullName = fieldValues.fullName ? "" : "This field is required."
-        if ('email' in fieldValues)
-            temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
-        if ('mobile' in fieldValues)
-            temp.mobile = fieldValues.mobile.length > 9 ? "" : "Minimum 10 numbers required."
-        if ('departmentId' in fieldValues)
-            temp.departmentId = fieldValues.departmentId.length != 0 ? "" : "This field is required."        
+        if ('college' in fieldValues)
+            temp.college = (/$^|.+@.+..+/).test(fieldValues.college) ? "" : "college is not valid."
+        if ('id_Number' in fieldValues)
+            temp.id_Number = fieldValues.id_Number.length > 9 ? "" : "Minimum 10 numbers required."
+        if ('neighborhoodId' in fieldValues)
+            temp.neighborhoodId = fieldValues.neighborhoodId.length != 0 ? "" : "This field is required."        
         */
         
         setErrors({
@@ -66,12 +62,17 @@ export default function EmployeeForm() {
     } = useForm(initialFValues, true, validate);
 
     const handleSubmit = e => {
+        let today = new Date();
         e.preventDefault()
-        if (validate()){
+        if (validate()){            
+            let fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            let hora = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            values.registerDate = fecha;
+            values.hour = hora;
             employeeService.insertEmployee(values)
             resetForm()            
         }
-        console.log(employeeService.getAllEmployees())
+        //console.log(employeeService.getAllEmployees())
     }
 
     return (
@@ -101,11 +102,11 @@ export default function EmployeeForm() {
                     />
                     
                     <Controls.Input                    
-                        name="mobile"
+                        name="id_Number"
                         label="Identification Number"
-                        value={values.mobile}
+                        value={values.id_Number}
                         onChange={handleInputChange}
-                        error={errors.mobile}
+                        error={errors.id_Number}
                     />                  
 
                 </Grid>
@@ -115,33 +116,30 @@ export default function EmployeeForm() {
                             label="Address"
                             value={values.address}
                             onChange={handleInputChange}
-                        />
-                    <Controls.Input
-                            label="Email"
-                            name="email"
-                            value={values.email}
-                            onChange={handleInputChange}
-                            error={errors.email}
+                            value={errors.address}
                         />
                     <Controls.Select
-                        name="departmentId"
-                        label="Department"
-                        value={values.departmentId}
+                        name="neighborhoodId"
+                        label="Neighborhood"
+                        value={values.neighborhoodId}
                         onChange={handleInputChange}
-                        options={getDepartmentCollection()}
-                        error={errors.departmentId}
+                        options={employeeService.getDepartmentCollection()}
+                        error={errors.neighborhoodId}
                     />
-                    <Controls.DatePicker
-                        name="hireDate"
-                        label="Hire Date"
-                        value={values.hireDate}
+                    <Controls.Input
+                            name="college"
+                            label="College"
+                            value={values.college}
+                            onChange={handleInputChange}
+                            error={errors.college}
+                        />                    
+                    <Controls.Select
+                        name="eps"
+                        label="EPS"
+                        value={values.eps}
                         onChange={handleInputChange}
-                    />
-                    <Controls.Checkbox
-                        name="isPermanent"
-                        label="Permanent Employee"
-                        value={values.isPermanent}
-                        onChange={handleInputChange}
+                        options={employeeService.getEPS()}
+                        error={errors.eps}
                     />
 
                     <div>
@@ -158,3 +156,22 @@ export default function EmployeeForm() {
         </Form>
     )
 }
+
+/*
+
+                    <Controls.Checkbox
+                        name="isPermanent"
+                        label="Permanent Employee"
+                        value={values.isPermanent}
+                        onChange={handleInputChange}
+                    />
+
+
+<Controls.DatePicker
+                        name="registerDate"
+                        label="Register Date"
+                        value={values.registerDate}
+                        onChange={handleInputChange}
+                    />
+
+*/

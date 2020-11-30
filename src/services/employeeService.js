@@ -4,13 +4,21 @@ const KEYS ={
 }
 
 export const getDepartmentCollection = ()=>([
-    { id: '1', title: 'Development' },
-    { id: '2', title: 'Marketing' },
-    { id: '3', title: 'Accounting' },
-    { id: '4', title: 'HR' },
+    { id: '1', title: 'Colseguros' },
+    { id: '2', title: 'Gran Limonar' },
+    { id: '3', title: 'Barrio Alejandro' },
+    { id: '4', title: 'Barrio Nicolas' },
+])
+
+export const getEPS = ()=>([
+    { id: '1', title: 'SOS' },
+    { id: '2', title: 'SURA' },
+    { id: '3', title: 'Coomeva' },
+    { id: '4', title: 'Muerte grati' },
 ])
 
 export function insertEmployee(data) {
+    console.log(data)
     let employees=getAllEmployees();
     data['id'] = generateEmployeeId()
     employees.push(data)
