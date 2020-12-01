@@ -7,6 +7,8 @@ import PageHeader from '../components/PageHeader';
 
 import Employees from "../pages/Employees/Employees";
 
+import Login from "../pages/Login/Login"
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -38,7 +40,8 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles({
   appMain: {
-    paddingLeft: '320px',
+    //paddingLeft: '320px',
+    paddingLeft: '0px',
     width: '100%'
   }
 })
@@ -48,10 +51,10 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <SideMenu />
+      {/*<SideMenu />*/}
       <div className={classes.appMain}>
         <Header />
-        
+        <Login />
         <Employees />
       </div>
       <CssBaseline />

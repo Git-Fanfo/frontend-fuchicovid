@@ -77,6 +77,7 @@ export default function EmployeeForm() {
 
     return (
         <Form onSubmit={handleSubmit}>
+            
             <Grid container>
                 <Grid item xs={6}>
                     <Controls.Input
@@ -116,7 +117,7 @@ export default function EmployeeForm() {
                             label="Address"
                             value={values.address}
                             onChange={handleInputChange}
-                            value={errors.address}
+                            error={errors.address}
                         />
                     <Controls.Select
                         name="neighborhoodId"
