@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import SideMenu from "../components/SideMenu";
 import { makeStyles, CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
 import Header from "../components/Header";
 import PageHeader from '../components/PageHeader';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Employees from "../pages/Employees/Employees";
 
 import Login from "../pages/Login/Login"
+import LoginProps from "../pages/LoginProps/Login"
 
 const theme = createMuiTheme({
   palette: {
@@ -47,16 +49,26 @@ const useStyles = makeStyles({
 })
 
 function App() {
+
+  //setView(state.login+1);
   const classes = useStyles();
 
   return (
     <ThemeProvider theme={theme}>
-      {/*<SideMenu />*/}
+      {/*<SideMenu />
+      <Header />*/}
       <div className={classes.appMain}>
-        <Header />
-        <Login />
+        
+        <Login/>
         <Employees />
       </div>
+
+      <BrowserRouter>
+        <Switch>
+          <Route path="/login" component={LoginProps}/>
+        </Switch>
+      </BrowserRouter>
+
       <CssBaseline />
     </ThemeProvider>
   );
