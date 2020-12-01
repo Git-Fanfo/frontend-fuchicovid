@@ -56,16 +56,18 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       {/*<SideMenu />
-      <Header />*/}
+      <Header />
+      <Login/>
+        <Employees />*/}
       <div className={classes.appMain}>
         
-        <Login/>
-        <Employees />
+        
       </div>
 
       <BrowserRouter>
         <Switch>
           <Route path="/login" component={LoginProps}/>
+          <Route component={LoginProps}/>
         </Switch>
       </BrowserRouter>
 
