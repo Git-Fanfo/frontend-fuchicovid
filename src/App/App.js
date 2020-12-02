@@ -7,11 +7,10 @@ import PageHeader from '../components/PageHeader';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Employees from "../pages/Employees/Employees";
-
-import Login from "../pages/Login/Login"
 import LoginProps from "../pages/LoginProps/Login"
 import LobbyRegistro from "../pages/LobbyRegistro/LobbyReg"
 import Patients from "../pages/Patient/Patient"
+import Average from "../pages/Average/Average"
 
 const theme = createMuiTheme({
   palette: {
@@ -73,6 +72,7 @@ function App() {
           <Route path="/lobby-service" component={LobbyRegistro}/>
           <Route path="/register-doctor" component={Employees}/>
           <Route path="/patient-register" component={Patients}/>
+          <Route path="/average-table" component={Average}/>
           <Route component={LoginProps}/>
         </Switch>
       </BrowserRouter>

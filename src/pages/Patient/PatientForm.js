@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import {useHistory} from 'react-router-dom';
-import { Grid,Button } from '@material-ui/core';
+import React, { useState, useEffect } from 'react'
+import { Grid, } from '@material-ui/core';
 import Controls from "../../components/controls/Controls";
 import { useForm, Form } from '../../components/useForm';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 //import * as patientService from "../../services/patientService.js";
 
 
@@ -19,19 +17,18 @@ const initialFValues = {
     last_name: '',
     type_id: 'C.C.',
     id_Number: '',
+    Neighborhood : '',
+    Address : '',
+    companions : '',
+    place_of_contagion : '',
     geolocation: '',
    //Si queremos poner calendario al final, poner new Date aqui
     registerDate: '',
     //isPermanent: false,
     hour : '',
-    housemates : '',
-    companions : '',
-    place_of_contagion : ''
 }
 
 export default function PatientForm() {
-    const history = useHistory();
-    const goBack = useCallback(() => history.push('/lobby-service'), [history]);
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -73,7 +70,6 @@ export default function PatientForm() {
             let hora = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
             values.registerDate = fecha;
             values.hour = hora;
-            console.log(values)
             //patientService.insertPatient(values)
             resetForm()            
         }
@@ -81,16 +77,8 @@ export default function PatientForm() {
     }
 
     return (
-        
         <Form onSubmit={handleSubmit}>
-            <Button
-                variant="contained"
-                color="secondary"                
-                startIcon={<ArrowBackIcon />}
-                onClick={goBack}
-            >
-                BACK
-            </Button>
+            
             <Grid container>
                 <Grid item xs={6}>
                     <Controls.Input
@@ -121,10 +109,27 @@ export default function PatientForm() {
                         value={values.id_Number}
                         onChange={handleInputChange}
                         error={errors.id_Number}
-                    />                  
+                    />   
 
-                </Grid>
+                    <Controls.Input                    
+                        name="neighborhood"
+                        label="Neighborhood"
+                        value={values.neighborhood}
+                        onChange={handleInputChange}
+                        error={errors.neighborhood}
+                    />               
+
+               </Grid>
                 <Grid item xs={6}>
+                    
+                    <Controls.Input                    
+                        name="address"
+                        label="Address"
+                        value={values.address}
+                        onChange={handleInputChange}
+                        error={errors.address}
+                    /> 
+
                     <Controls.Input                            
                             name="geolocation"
                             label="Geolocation"
