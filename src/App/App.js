@@ -10,6 +10,8 @@ import Employees from "../pages/Employees/Employees";
 
 import Login from "../pages/Login/Login"
 import LoginProps from "../pages/LoginProps/Login"
+import LobbyRegistro from "../pages/LobbyRegistro/LobbyReg"
+import Patients from "../pages/Patient/Patient"
 
 const theme = createMuiTheme({
   palette: {
@@ -22,7 +24,8 @@ const theme = createMuiTheme({
       light: '#f8324526'
     },
     background: {
-      default: "#f4f5fd"
+      //default: "#f4f5fd"
+      default: "#ffb0c4"
     },
   },
   overrides:{
@@ -67,6 +70,9 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route path="/login" component={LoginProps}/>
+          <Route path="/lobby-service" component={LobbyRegistro}/>
+          <Route path="/register-doctor" component={Employees}/>
+          <Route path="/patient-register" component={Patients}/>
           <Route component={LoginProps}/>
         </Switch>
       </BrowserRouter>

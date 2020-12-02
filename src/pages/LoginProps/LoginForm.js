@@ -9,6 +9,8 @@ import MuiAlert from '@material-ui/lab/Alert';
 import {useHistory} from 'react-router-dom';
 
 
+console.log('Closing session...')
+localStorage.clear()
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
@@ -26,7 +28,7 @@ const initialFValues = {
 export default function LoginForm() {
     //redireccionar https://stackoverflow.com/questions/29244731/react-router-how-to-manually-invoke-link
     const history = useHistory();
-    const redirect = useCallback(() => history.push('/login'), [history]);
+    const redirect = useCallback(() => history.push('/lobby-service'), [history]);
 
     const [open, setOpen] = React.useState(false);
 
@@ -80,7 +82,7 @@ export default function LoginForm() {
             loginService.insertLog(values)
             console.log("esconder login")
             handleClick()
-            
+
             redirect()
 
             resetForm()            
@@ -123,7 +125,7 @@ export default function LoginForm() {
                             text="See Data"
                             color="default"
                             color="secondary"
-                            onClick={resetForm}/>
+                            onClick={localStorage.clear()}/>
                     </div>
                 </Grid>
                 

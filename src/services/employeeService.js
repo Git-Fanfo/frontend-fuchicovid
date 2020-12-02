@@ -11,10 +11,10 @@ export const getDepartmentCollection = ()=>([
 ])
 
 export const getEPS = ()=>([
-    { id: '1', title: 'SOS' },
-    { id: '2', title: 'SURA' },
-    { id: '3', title: 'Coomeva' },
-    { id: '4', title: 'Muerte grati' },
+    { id: '300', title: 'SOS' },
+    { id: '301', title: 'SURA' },
+    { id: '302', title: 'Coomeva' },
+    { id: '303', title: 'Muerte grati' },
 ])
 
 export function insertEmployee(data) {

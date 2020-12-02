@@ -7,12 +7,12 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(0.5)
     },
     label: {
-        textTransform: 'none'
+        textTransform: 'none',
     }
 }))
 
 export default function Button(props) {
-    const { text, size, color, variant, onClick, ...other } = props
+    const { text, size, color, variant, onClick, fullWidth, ...other } = props
     const classes = useStyles();
 
     return (
@@ -20,6 +20,7 @@ export default function Button(props) {
             variant={variant || "contained"}
             size={size || "large"}
             color={color || "primary"}
+            fullWidth={fullWidth || false}
             onClick={onClick}
             {...other}
             classes={{ root: classes.root, label: classes.label }}>
