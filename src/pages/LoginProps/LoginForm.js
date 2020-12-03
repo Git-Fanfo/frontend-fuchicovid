@@ -26,6 +26,7 @@ export default function LoginForm() {
     const redirect = useCallback(() => history.push('/lobby-service'), [history]);
 
     const [open, setOpen] = React.useState(false);
+    const [test, setTest] = React.useState();
 
     const handleClick = () => {
       setOpen(true);
@@ -118,6 +119,7 @@ const handleSubmit = e => {
 
     return (
         <Form onSubmit={handleSubmit}>
+            {test}
             
             <Grid container justify="center">
                 <Grid item xs={6}>

@@ -10,6 +10,8 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {Button} from '@material-ui/core'
 import {useHistory} from 'react-router-dom';
 
+import * as apiGetService from "../../services/apiGetService";
+
 const type_idItems = [
     { id: 'c.c.', title: 'C.C.' },
     { id: 'c.e.', title: 'C.E.' },
@@ -17,21 +19,39 @@ const type_idItems = [
 ]
 
 const initialFValues = {
-    id: 0,
-    name: '',
-    last_name: '',
-    college: '',
-    id_Number: '',
-    address: '',
-    type_id: 'C.C.',
-    neighborhoodId: '',
-    eps: '',
+    nombre: '',
+    apellido: '',
+    id_universidad: '',
+    id: '',
+    direccion: '',
+    tipo_id: 'C.C.',
+    id_barrio: '',
+    id_eps: '',
     //Si queremos poner calendario al final, poner new Date aqui
-    registerDate: '',
+    fecha: '',
     //isPermanent: false,
-    hour : ''
-}
+    hora : '',
 
+    register_by : '_',
+    userName : '_',
+    password : '_'
+}
+/*
+"nombre": "Primera", 
+"apellido":"Prueba",
+"id_universidad":300, 
+"id": 333333333,
+"direccion":"Calle nunca 777",
+"tipo_id": 100, 
+"id_barrio":200, 
+"id_eps":400,
+"fecha":"15/05/20", 
+"hora":"22:22:22",
+
+"register_by":"Admin-01", 
+"userName":"PP-01",
+"password":"contra_01"
+*/
 const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
@@ -62,21 +82,35 @@ export default function DoctorForm() {
     const history = useHistory();
     const goBack = useCallback(() => history.push('/lobby-service'), [history]);
 
+    const [barrios,setBarrios] = useState([])
+    //otros
+    useEffect(() => {
+        async function fetchData() {
+          // You can await here
+          setBarrios(await apiGetService.getBarrio())
+          //a
+        }
+        fetchData();
+      }, []);
+
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
-        if ('fullName' in fieldValues)
-            temp.fullName = fieldValues.fullName ? "" : "This field is required."
-        /*
-        if ('fullName' in fieldValues)
-            temp.fullName = fieldValues.fullName ? "" : "This field is required."
-        if ('college' in fieldValues)
-            temp.college = (/$^|.+@.+..+/).test(fieldValues.college) ? "" : "college is not valid."
-        if ('id_Number' in fieldValues)
-            temp.id_Number = fieldValues.id_Number.length > 9 ? "" : "Minimum 10 numbers required."
-        if ('neighborhoodId' in fieldValues)
-            temp.neighborhoodId = fieldValues.neighborhoodId.length != 0 ? "" : "This field is required."        
-        */
-        
+        if ('nombre' in fieldValues)
+            temp.nombre = fieldValues.nombre ? "" : "This field is required."
+        if ('apellido' in fieldValues)
+            temp.apellido = fieldValues.apellido ? "" : "This field is required."
+        if ('id_universidad' in fieldValues)
+            temp.id_universidad = (/$^|.+@.+..+/).test(fieldValues.id_universidad) ? "" : "id_universidad is not valid."
+        if ('id' in fieldValues)
+            temp.id = fieldValues.id.length > 9 ? "" : "Minimum 10 numbers required."
+        if ('direccion' in fieldValues)
+            temp.direccion = fieldValues.direccion ? "" : "This field is required."            
+        if ('id_universidad' in fieldValues)
+            temp.id_universidad = fieldValues.id_universidad ? "" : "This field is required."      
+        if ('id_barrio' in fieldValues)
+            temp.id_barrio = fieldValues.id_barrio.length != 0 ? "" : "This field is required."   
+        if ('id_eps' in fieldValues)
+            temp.id_eps = fieldValues.id_eps.length != 0 ? "" : "This field is required."             
         setErrors({
             ...temp
         })
@@ -100,13 +134,11 @@ export default function DoctorForm() {
         if (validate()){            
             let fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
             let hora = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-            values.registerDate = fecha;
-            values.hour = hora;
+            values.fecha = fecha;
+            values.hora = hora;
             console.log(values)
-            //employeeService.insertEmployee(values)
             resetForm()            
         }
-        //console.log(employeeService.getAllEmployees())
     }
 
     return (
@@ -124,66 +156,66 @@ export default function DoctorForm() {
             <Grid container>
                 <Grid item xs={6}>
                     <Controls.Input
-                        name="name"
+                        name="nombre"
                         label="Name"
-                        value={values.name}
+                        value={values.nombre}
                         onChange={handleInputChange}
-                        error={errors.name}
+                        error={errors.nombre}
                     />
                     <Controls.Input
-                        name="last_name"
+                        name="apellido"
                         label="Last Name"
-                        value={values.last_name}
+                        value={values.apellido}
                         onChange={handleInputChange}
-                        error={errors.last_name}
+                        error={errors.apellido}
                     />
                     <Controls.RadioGroup
-                        name="type_id"
+                        name="tipo_id"
                         label="Type ID"
-                        value={values.type_id}
+                        value={values.tipo_id}
                         onChange={handleInputChange}
                         items={type_idItems}
                     />
                     
                     <Controls.Input                    
-                        name="id_Number"
+                        name="id"
                         label="Identification Number"
-                        value={values.id_Number}
+                        value={values.id}
                         onChange={handleInputChange}
-                        error={errors.id_Number}
+                        error={errors.id}
                     />                  
 
                 </Grid>
                 <Grid item xs={6}>
                     <Controls.Input                            
-                            name="address"
+                            name="direccion"
                             label="Address"
-                            value={values.address}
+                            value={values.direccion}
                             onChange={handleInputChange}
-                            error={errors.address}
+                            error={errors.direccion}
                         />
                     <Controls.Select
-                        name="neighborhoodId"
+                        name="id_barrio"
                         label="Neighborhood"
-                        value={values.neighborhoodId}
+                        value={values.id_barrio}
                         onChange={handleInputChange}
-                        options={employeeService.getDepartmentCollection()}
-                        error={errors.neighborhoodId}
+                        options={barrios}
+                        error={errors.id_barrio}
                     />
                     <Controls.Input
-                            name="college"
+                            name="id_universidad"
                             label="College"
-                            value={values.college}
+                            value={values.id_universidad}
                             onChange={handleInputChange}
-                            error={errors.college}
+                            error={errors.id_universidad}
                         />                    
                     <Controls.Select
-                        name="eps"
+                        name="id_eps"
                         label="EPS"
-                        value={values.eps}
+                        value={values.id_eps}
                         onChange={handleInputChange}
                         options={employeeService.getEPS()}
-                        error={errors.eps}
+                        error={errors.id_eps}
                     />
 
                     <div>
@@ -214,9 +246,9 @@ export default function DoctorForm() {
 
 
 <Controls.DatePicker
-                        name="registerDate"
+                        name="fecha"
                         label="Register Date"
-                        value={values.registerDate}
+                        value={values.fecha}
                         onChange={handleInputChange}
                     />
 

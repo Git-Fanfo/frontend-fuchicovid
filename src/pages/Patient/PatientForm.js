@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { Grid, } from '@material-ui/core';
 import Controls from "../../components/controls/Controls";
 import { useForm, Form } from '../../components/useForm';
-//import * as patientService from "../../services/patientService.js";
 
 import Paper from '@material-ui/core/Paper';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -10,19 +9,19 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {Button} from '@material-ui/core'
 import {useHistory} from 'react-router-dom';
 
-const type_idItems = [
-    { id: 'c.c.', title: 'C.C.' },
-    { id: 'c.e.', title: 'C.E.' },
-    { id: 't.i.', title: 'T.I.' },
-]
+import * as apiGetService from "../../services/apiGetService";
 
+const tipo_idItems = [
+    { id: 'c.c.', title: 'C.C' },
+    { id: 'c.e.', title: 'C.E' },
+    { id: 't.i.', title: 'T.I' },
+]
 const initialFValues = {
-    id: 0,
     nombre: '',
     apellido: '',
-    type_id: 'C.C.',
-    id_Number: '',
-    Neighborhood : '',
+    tipo_id: 'C.C',
+    id: 0,
+    neighborhoodId: '',
     Address : '',
     companions : '',
     place_of_contagion : '',
@@ -55,13 +54,22 @@ const useStyles = makeStyles((theme) => ({
       top: 20,
       width: 1,
     },
-  }));
+  }));  
 
 export default function PatientForm() {
 
     const classes = useStyles();
     const history = useHistory();
     const goBack = useCallback(() => history.push('/lobby-service'), [history]);
+
+    const [barrios,setBarrios] = useState([])
+    useEffect(() => {
+        async function fetchData() {
+          // You can await here
+          setBarrios(await apiGetService.getBarrio())
+        }
+        fetchData();
+      }, []);
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -72,8 +80,8 @@ export default function PatientForm() {
             temp.fullName = fieldValues.fullName ? "" : "This field is required."
         if ('college' in fieldValues)
             temp.college = (/$^|.+@.+..+/).test(fieldValues.college) ? "" : "college is not valid."
-        if ('id_Number' in fieldValues)
-            temp.id_Number = fieldValues.id_Number.length > 9 ? "" : "Minimum 10 numbers required."
+        if ('id' in fieldValues)
+            temp.id = fieldValues.id.length > 9 ? "" : "Minimum 10 numbers required."
         if ('neighborhoodId' in fieldValues)
             temp.neighborhoodId = fieldValues.neighborhoodId.length != 0 ? "" : "This field is required."        
         */
@@ -139,28 +147,28 @@ export default function PatientForm() {
                         error={errors.apellido}
                     />
                     <Controls.RadioGroup
-                        name="type_id"
+                        name="tipo_id"
                         label="Type ID"
-                        value={values.type_id}
+                        value={values.tipo_id}
                         onChange={handleInputChange}
-                        items={type_idItems}
+                        items={tipo_idItems}
                     />
                     
                     <Controls.Input                    
-                        name="id_Number"
+                        name="id"
                         label="Identification Number"
-                        value={values.id_Number}
+                        value={values.id}
                         onChange={handleInputChange}
-                        error={errors.id_Number}
+                        error={errors.id}
                     />   
-
-                    <Controls.Input                    
-                        name="neighborhood"
+                    <Controls.Select
+                        name="neighborhoodId"
                         label="Neighborhood"
-                        value={values.neighborhood}
+                        value={values.neighborhoodId}
                         onChange={handleInputChange}
-                        error={errors.neighborhood}
-                    />               
+                        options={barrios}
+                        error={errors.neighborhoodId}
+                    />   
 
                </Grid>
                 <Grid item xs={6}>
