@@ -7,7 +7,7 @@ import { makeStyles, CssBaseline, createMuiTheme, ThemeProvider } from '@materia
 //import PageHeader from '../components/PageHeader';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-import Employees from "../pages/Employees/Employees";
+import Doctors from "../pages/Doctor/Doctor";
 import LoginProps from "../pages/LoginProps/Login"
 import LobbyRegistro from "../pages/LobbyRegistro/LobbyReg"
 import Patients from "../pages/Patient/Patient"
@@ -76,7 +76,7 @@ function App() {
         <Switch>
           <Route path="/login" component={LoginProps}/>
           <Route path="/lobby-service" component={LobbyRegistro}/>
-          <Route path="/register-doctor" component={Employees}/>
+          <Route path="/register-doctor" component={Doctors}/>
           <Route path="/patient-register" component={Patients}/>
           <Route path="/average-table2" component={Average2}/>
           <Route path="/average-table" component={Average}/>

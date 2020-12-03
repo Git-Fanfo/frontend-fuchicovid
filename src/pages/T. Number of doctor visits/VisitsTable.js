@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -20,6 +20,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import {Button} from '@material-ui/core'
+import {useHistory} from 'react-router-dom';
 
 function createData(name, day, week, month) {
   return { name, day, week, month};
@@ -162,6 +166,8 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const history = useHistory();
+  const goBack = useCallback(() => history.push('/lobby-service'), [history]);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -217,6 +223,15 @@ export default function EnhancedTable() {
 
   return (
     <div className={classes.root}>
+       <Button
+                variant="contained"
+                color="secondary"
+                className={classes.button}
+                startIcon={<ArrowBackIcon />}
+                onClick={goBack}
+            >
+                BACK
+            </Button>
       <Paper className={classes.paper}>
         <TableContainer>
           <Table

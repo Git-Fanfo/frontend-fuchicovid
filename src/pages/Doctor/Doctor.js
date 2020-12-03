@@ -1,5 +1,5 @@
 import React from 'react'
-import EmployeeForm from "./EmployeeForm";
+import EmployeeForm from "./DoctorForm";
 import PageHeader from "../../components/PageHeader";
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import { Paper,makeStyles } from '@material-ui/core';
@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function Employees() {
+export default function Doctors() {
 
     const classes = useStyles();
 

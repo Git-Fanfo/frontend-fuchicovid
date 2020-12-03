@@ -143,23 +143,6 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
-const EnhancedTableToolbar = (props) => {
-  const classes = useToolbarStyles();
-
-  return (
-    <Toolbar
-    >
-      {(<Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Ages in Santiago de Cali
-
-        </Typography>
-      )}
-    </Toolbar>
-  );
-};
-
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
@@ -192,6 +175,7 @@ export default function EnhancedTable() {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  
   const history = useHistory();
   const goBack = useCallback(() => history.push('/lobby-service'), [history]);
 
@@ -249,16 +233,15 @@ export default function EnhancedTable() {
 
   return (
     <div className={classes.root}>
+      <Paper className={classes.paper}>
       <Button
                 variant="contained"
                 color="secondary"
                 className={classes.button}
                 startIcon={<ArrowBackIcon />}
                 onClick={goBack}
-            >
-                BACK
-            </Button>
-      <Paper className={classes.paper}>
+      >BACK
+      </Button>
         <TableContainer>
           <Table
             className={classes.table}
