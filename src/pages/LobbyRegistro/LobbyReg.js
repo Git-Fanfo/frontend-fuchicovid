@@ -18,11 +18,19 @@ export default function LobbyReg() {
     const classes = useStyles();
     //const nombre = loginService.getAllUsers().userName
     //imprimirUsuario();
+    let nombre = ''
     console.log(loginService.getAllUsers())
+    try{
+        nombre = loginService.getAllUsers().user_name
+    }
+    catch{
+        nombre = 'INTRUSO'
+    }
+
     return (
         <>
             <PageHeader
-                title={"Welcome Again "}//+ nombre}
+                title={"Welcome Again "+ nombre}
                 subTitle="Service Worker Panel"
                 icon={<HomeIcon fontSize="large" />}
             />
