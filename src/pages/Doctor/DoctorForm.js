@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Grid, } from '@material-ui/core';
 import Controls from "../../components/controls/Controls";
 import { useForm, Form } from '../../components/useForm';
 import * as employeeService from "../../services/employeeService";
 
+import Paper from '@material-ui/core/Paper';
+import { lighten, makeStyles } from '@material-ui/core/styles';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import {Button} from '@material-ui/core'
+import {useHistory} from 'react-router-dom';
 
 const type_idItems = [
     { id: 'c.c.', title: 'C.C.' },
@@ -27,7 +32,35 @@ const initialFValues = {
     hour : ''
 }
 
-export default function EmployeeForm() {
+const useStyles = makeStyles((theme) => ({
+    root: {
+      width: '100%',
+    },
+    paper: {
+      width: '100%',
+      marginBottom: theme.spacing(2),
+    },
+    table: {
+      minWidth: 750,
+    },
+    visuallyHidden: {
+      border: 0,
+      clip: 'rect(0 0 0 0)',
+      height: 1,
+      margin: -1,
+      overflow: 'hidden',
+      padding: 0,
+      position: 'absolute',
+      top: 20,
+      width: 1,
+    },
+  }));
+
+export default function DoctorForm() {
+
+    const classes = useStyles();
+    const history = useHistory();
+    const goBack = useCallback(() => history.push('/lobby-service'), [history]);
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -76,8 +109,17 @@ export default function EmployeeForm() {
     }
 
     return (
-        <Form onSubmit={handleSubmit}>
-            
+        <div className={classes.root}>
+        <Paper className={classes.paper}>
+        <Button
+                  variant="contained"
+                  color="secondary"
+                  className={classes.button}
+                  startIcon={<ArrowBackIcon />}
+                  onClick={goBack}
+        >BACK
+        </Button>
+        <Form onSubmit={handleSubmit}>     
             <Grid container>
                 <Grid item xs={6}>
                     <Controls.Input
@@ -155,6 +197,8 @@ export default function EmployeeForm() {
                 </Grid>
             </Grid>
         </Form>
+    </Paper>
+    </div>
     )
 }
 

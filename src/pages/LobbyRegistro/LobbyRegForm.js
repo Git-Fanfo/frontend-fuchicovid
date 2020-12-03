@@ -27,7 +27,7 @@ export default function LobbyRegForm() {
 
     const [buttonRegDoc,setbuttonRegDoc] = useState(<Controls.Button
                                                 type="submit"
-                                                text="Register a Doctor."
+                                                text="Register a Doctor"
                                                 fullWidth={true}
                                                 onClick={RegDoc}/>)
     const classes = useStyles();
@@ -46,12 +46,12 @@ export default function LobbyRegForm() {
             >
                 BACK
             </Button>
-            <h1  className={classes.title}>Person Registration.</h1>
+            <h1  className={classes.title}>Person Registration</h1>
             <Grid container spacing={3}>                    
                     <Grid item xs={6}>
                     <Controls.Button
                                 type="submit"
-                                text="Register an Infected Patient."
+                                text="Register an Infected Patient"
                                 fullWidth={true}
                                 onClick={RegPac} />
                     </Grid>
@@ -63,7 +63,7 @@ export default function LobbyRegForm() {
             <Grid container spacing={3}>
             
                     <Grid item xs={6}>
-                    <h1  className={classes.title}>Record of visits.</h1>
+                    <h1  className={classes.title}>Record of visits</h1>
                     <Controls.Button
                                 type="submit"
                                 text="New entry"
@@ -79,7 +79,7 @@ export default function LobbyRegForm() {
                                 fullWidth={true}/>         
                     </Grid>
             </Grid>
-            <h1  className={classes.title}>Reports.</h1>
+            <h1  className={classes.title}>Reports</h1>
             <Grid container spacing={3}>
                     <Grid item xs={4}>
                     <Controls.Button
