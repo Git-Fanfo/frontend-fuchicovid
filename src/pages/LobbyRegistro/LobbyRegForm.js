@@ -21,7 +21,10 @@ export default function LobbyRegForm() {
     const history = useHistory();
     const goBack = useCallback(() => history.push('/login'), [history]);
     const RegDoc = useCallback(() => history.push('/register-doctor'), [history]);
-    const RegPac = useCallback(() => history.push('/patient-register'), [history]);  
+    const RegPac = useCallback(() => history.push('/patient-register'), [history]); 
+    const TabAvg = useCallback(() => history.push('/average-table'), [history]); 
+    const TabAge = useCallback(() => history.push('/age-table'), [history]); 
+    const TabVst = useCallback(() => history.push('/visits-table'), [history]); 
 
     const imprimirUsuario = () => console.log(loginService.getAllUsers())
 
@@ -85,19 +88,22 @@ export default function LobbyRegForm() {
                     <Controls.Button
                                 type="submit"
                                 text="Average Infected per neighborhood"
-                                fullWidth={true}/>         
+                                fullWidth={true}
+                                onClick={TabAvg}/>         
                     </Grid>
                     <Grid item xs={4}>
                     <Controls.Button
                                 type="submit"
                                 text="Age of the Pacients"
-                                fullWidth={true} />
+                                fullWidth={true}
+                                onClick={TabAge} />
                     </Grid>
                     <Grid item xs={4}>
                     <Controls.Button
                                 type="submit"
                                 text="Visit Count"
-                                fullWidth={true} />
+                                fullWidth={true}
+                                onClick={TabVst} />
                     </Grid>
                 </Grid>
             </React.Fragment>
