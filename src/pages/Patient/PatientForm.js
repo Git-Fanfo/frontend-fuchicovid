@@ -13,8 +13,8 @@ const type_idItems = [
 
 const initialFValues = {
     id: 0,
-    name: '',
-    last_name: '',
+    nombre: '',
+    apellido: '',
     type_id: 'C.C.',
     id_Number: '',
     Neighborhood : '',
@@ -23,9 +23,9 @@ const initialFValues = {
     place_of_contagion : '',
     geolocation: '',
    //Si queremos poner calendario al final, poner new Date aqui
-    registerDate: '',
+    fecha: '',
     //isPermanent: false,
-    hour : '',
+    hora : '',
 }
 
 export default function PatientForm() {
@@ -66,10 +66,11 @@ export default function PatientForm() {
         let today = new Date();
         e.preventDefault()
         if (validate()){            
-            let fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            let fecha = today.getFullYear()+'/'+(today.getMonth()+1)+'/'+today.getDate();
             let hora = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-            values.registerDate = fecha;
-            values.hour = hora;
+            values.fecha = fecha;
+            values.hora = hora;
+            console.log(values);
             //patientService.insertPatient(values)
             resetForm()            
         }
@@ -82,18 +83,18 @@ export default function PatientForm() {
             <Grid container>
                 <Grid item xs={6}>
                     <Controls.Input
-                        name="name"
+                        name="nombre"
                         label="Name"
-                        value={values.name}
+                        value={values.nombre}
                         onChange={handleInputChange}
-                        error={errors.name}
+                        error={errors.nombre}
                     />
                     <Controls.Input
-                        name="last_name"
+                        name="apellido"
                         label="Last Name"
-                        value={values.last_name}
+                        value={values.apellido}
                         onChange={handleInputChange}
-                        error={errors.last_name}
+                        error={errors.apellido}
                     />
                     <Controls.RadioGroup
                         name="type_id"
@@ -184,9 +185,9 @@ export default function PatientForm() {
 
 
 <Controls.DatePicker
-                        name="registerDate"
+                        name="fecha"
                         label="Register Date"
-                        value={values.registerDate}
+                        value={values.fecha}
                         onChange={handleInputChange}
                     />
 

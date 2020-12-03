@@ -25,7 +25,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function borrar(){    
-    localStorage.clear();
     console.log("borrado")
 }
 

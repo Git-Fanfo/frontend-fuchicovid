@@ -16,13 +16,8 @@ function Alert(props) {
   }
 
 const initialFValues = {
-    id: 0,
-    username: '',
-    password: '',
-    //Si queremos poner calendario al final, poner new Date aqui
-    registerDate: '',
-    //isPermanent: false,
-    hour : ''
+    userName: '',
+    password: ''
 }
 
 export default function LoginForm() {
@@ -45,10 +40,10 @@ export default function LoginForm() {
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }        
-        //console.log(fieldValues.username)
+        //console.log(fieldValues.userName)
         //console.log(loginService.getLogin())
-        if ('username' in fieldValues)
-            temp.username = fieldValues.username ? "" : "Please enter a valid username."
+        if ('userName' in fieldValues)
+            temp.userName = fieldValues.userName ? "" : "Please enter a valid username."
         if ('password' in fieldValues)
             temp.password = fieldValues.password ? "" : "Please enter a valid password." 
         //Aqui revisa si existe el usuario  
@@ -71,16 +66,44 @@ export default function LoginForm() {
         resetForm
     } = useForm(initialFValues, true, validate);
 
-    const handleSubmit = e => {
-        let today = new Date();
+    const   handleSubmit = async e => {
         e.preventDefault()
-        if (validate()){            
-            let fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-            let hora = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-            values.registerDate = fecha;
-            values.hour = hora;
+        if (validate()){
+            try {                
+                let config = {
+                    method:'PUT',
+                    headers:{
+                        'Accept':'application/json',
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify(values)
+                }
+                //console.log(config.body)
+                let res = await fetch('https://shrouded-bastion-95914.herokuapp.com/api/login', config)
+                let json = await res.json()
+
+                if(json.length===0){
+                    handleClick()                   
+                }else{                    
+                    loginService.insertLog(json[0])
+                    resetForm()  
+                    redirect()                            
+                }                               
+            } catch (error) {
+                //this.props.history.push('/')
+                console.log('ohno :o')
+                //console.log(error)                
+            }
+        //console.log(this.state)
+        }
+    }
+
+/*
+const handleSubmit = e => {
+        e.preventDefault()
+        if (validate()){
+            console.log(values)
             loginService.insertLog(values)
-            console.log("esconder login")
             handleClick()
 
             redirect()
@@ -89,6 +112,8 @@ export default function LoginForm() {
         }
         //console.log(employeeService.getAllEmployees())
     }
+*/
+    
 
     return (
         <Form onSubmit={handleSubmit}>
@@ -96,11 +121,11 @@ export default function LoginForm() {
             <Grid container justify="center">
                 <Grid item xs={6}>
                     <Controls.Input
-                        name="username"
-                        label="Username"
-                        value={values.username}
+                        name="userName"
+                        label="username"
+                        value={values.userName}
                         onChange={handleInputChange}
-                        error={errors.username}
+                        error={errors.userName}
                     />
                     <Controls.Input
                         name="password"
@@ -116,16 +141,16 @@ export default function LoginForm() {
                             type="submit"
                             text="Login"                        
                              />
-                        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-                            <Alert onClose={handleClose} severity="success">
-                            Logged in!
+                        <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+                            <Alert onClose={handleClose} severity="error">
+                            User not found
                             </Alert>
                         </Snackbar>
                         <Controls.Button
                             text="See Data"
                             color="default"
                             color="secondary"
-                            onClick={localStorage.clear()}/>
+                            />
                     </div>
                 </Grid>
                 

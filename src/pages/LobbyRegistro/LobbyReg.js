@@ -16,13 +16,13 @@ const useStyles = makeStyles(theme => ({
 export default function LobbyReg() {
 
     const classes = useStyles();
-    //const nombre = loginService.getAllUsers()[0].username
-    //const imprimirUsuario = () => console.log(loginService.getAllUsers()[0].username)
+    //const nombre = loginService.getAllUsers().userName
     //imprimirUsuario();
+    console.log(loginService.getAllUsers())
     return (
         <>
             <PageHeader
-                title={"Welcome Again "}
+                title={"Welcome Again "}//+ nombre}
                 subTitle="Service Worker Panel"
                 icon={<HomeIcon fontSize="large" />}
             />

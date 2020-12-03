@@ -9,13 +9,9 @@ export const getLogin = ()=>([
 ])
 
 export function insertLog(data) {
-    console.log(data)
-    let login=getAllUsers();
-    data['id'] = generateloginId()
-    login.push(data)
-    localStorage.setItem(KEYS.login,JSON.stringify(login))
+    localStorage.setItem(KEYS.login,JSON.stringify(data))
 }
-
+///AQUIxd
 export function generateloginId() {
     if (localStorage.getItem(KEYS.loginId) == null)
         localStorage.setItem(KEYS.loginId, '0')
