@@ -102,7 +102,8 @@ export default function DoctorForm() {
             let hora = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
             values.registerDate = fecha;
             values.hour = hora;
-            employeeService.insertEmployee(values)
+            console.log(values)
+            //employeeService.insertEmployee(values)
             resetForm()            
         }
         //console.log(employeeService.getAllEmployees())

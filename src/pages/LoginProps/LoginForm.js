@@ -67,9 +67,10 @@ export default function LoginForm() {
     } = useForm(initialFValues, true, validate);
 
     const   handleSubmit = async e => {
+        
         e.preventDefault()
         if (validate()){
-            try {                
+            try {          
                 let config = {
                     method:'PUT',
                     headers:{

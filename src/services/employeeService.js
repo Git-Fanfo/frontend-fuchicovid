@@ -18,11 +18,13 @@ export const getEPS = ()=>([
 ])
 
 export function insertEmployee(data) {
-    console.log(data)
+    /*
     let employees=getAllEmployees();
     data['id'] = generateEmployeeId()
     employees.push(data)
-    localStorage.setItem(KEYS.employees,JSON.stringify(employees))
+    */console.log(data)
+    
+    localStorage.setItem(KEYS.employees,JSON.stringify(data))
 }
 
 export function generateEmployeeId() {
