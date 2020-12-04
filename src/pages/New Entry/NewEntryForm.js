@@ -12,19 +12,17 @@ import {useHistory} from 'react-router-dom';
 import * as apiGetService from "../../services/apiGetService";
 
 const type_idItems = [
-    { id: 'c.c.', title: 'C.C.' },
-    { id: 'c.e.', title: 'C.E.' },
-    { id: 't.i.', title: 'T.I.' },
+    { id: 'c.c.', title: 'C.C' },
+    { id: 'c.e.', title: 'C.E' },
+    { id: 't.i.', title: 'T.I' },
 ]
 
 let medicamentoss = [];
 
 const initialFValues = {
     id: '',
-    tipo_id: 'C.C.',
-    //Si queremos poner calendario al final, poner new Date aqui
+    tipo_id: 'C.C',
     fecha: '',
-    //isPermanent: false,
     hora : '',
     temperatura : [], 
     peso: [],
@@ -116,14 +114,20 @@ export default function NewEntryReg() {
     } = useForm(initialFValues, true, validate);
 
     const handleSubmit = e => {
+        let today = new Date();
         e.preventDefault()
-        if (validate()){           
+        if (validate()){       
+            let fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            let hora = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();    
                         let datos = []
                             datos.push({
-                            id:values.id,
+                            id:parseInt(values.id),
                             tipo_id: values.tipo_id,
                             temperatura : values.temperatura,
+                            fecha: fecha,
+                            hora: hora, 
                             peso : values.peso,  
+                            presion : values.presion,
                             observaciones : values.observaciones
                         })
                         datos.push(medicamentoss); 
