@@ -25,7 +25,8 @@ export default function LobbyRegForm() {
     const TabAvg = useCallback(() => history.push('/average-table'), [history]); 
     const TabAge = useCallback(() => history.push('/age-table'), [history]); 
     const TabVst = useCallback(() => history.push('/visits-table'), [history]); 
-    const NewEnt = useCallback(() => history.push('/new-entry'), [history]); 
+    const TabInv = useCallback(() => history.push('/inventory-table'), [history]); 
+    const NewEnt = useCallback(() => history.push('/new-entry'), [history]);
     const map = useCallback(() => history.push('/map'), [history]); 
 
     const imprimirUsuario = () => console.log(loginService.getAllUsers())
@@ -61,13 +62,14 @@ export default function LobbyRegForm() {
                                         type="submit"
                                         text="View Inventory"
                                         color="secondary"
-                                        fullWidth={true}/>)
+                                        fullWidth={true}
+                                        onClick={TabInv}/>)
                                     
     const classes = useStyles();
 
     //Aqui lo de usuarios
     //aqui -> {(test) ? buttonRegDoc : <div></div>}
-    let test = true;
+    let test = false;
 
     return (
         <React.Fragment>
