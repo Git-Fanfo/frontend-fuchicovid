@@ -329,14 +329,13 @@ export default function PatientForm() {
                     id_barrio:values.id_barrio, 
                     register_by:nombre, 
                     edad: parseInt(values.edad, 10),
-                    lat:parseFloat((getRandomArbitrary(-7651282, -7649471)/100000).toFixed(9)),
-                    long:parseFloat((getRandomArbitrary(342417, 345648)/100000).toFixed(9)),
+                    lat:parseFloat((getRandomArbitrary(342417, 345648)/100000).toFixed(9)),
+                    long:parseFloat((getRandomArbitrary(-7651282, -7649471)/100000).toFixed(9)),
                     id_profesional:values.id_profesional,
                     num_habitantes:parseInt(values.num_habitantes,10),
                     ciudad_contagio:values.ciudad_contagio
                 })
-                //lat:parseFloat((getRandomArbitrary(342417, 345648)/100000).toFixed(9)),
-                //long:parseFloat((getRandomArbitrary(-7651282, -7649471)/100000).toFixed(9)),
+                
                 datos.push(numeros)
                 datos.push(mail)
                 datos.push(pariente)

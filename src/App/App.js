@@ -17,6 +17,7 @@ import Average from "../pages/T. Average per neighborhood/Average"
 import Age from "../pages/T. Age of patients/Age"
 import Visits from "../pages/T. Number of doctor visits/Visits"
 import NewEntry from "../pages/New Entry/NewEntry"
+import ConsultRelatives from "../pages/T. ConsultRelative/ConsultRel"
 
 const theme = createMuiTheme({
   palette: {
@@ -84,6 +85,8 @@ function App() {
           <Route path="/age-table" component={Age}/>
           <Route path="/visits-table" component={Visits}/>
           <Route path="/new-entry" component={NewEntry}/>
+          <Route path="/consult-relatives" component={ConsultRelatives}/>
+          
           
           <Route component={LoginProps}/>
         </Switch>

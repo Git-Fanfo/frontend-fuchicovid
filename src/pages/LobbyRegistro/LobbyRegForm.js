@@ -67,7 +67,7 @@ export default function LobbyRegForm() {
 
     //Aqui lo de usuarios
     //aqui -> {(test) ? buttonRegDoc : <div></div>}
-    let test = true;
+    let test = true;//<-false para doctor
 
     return (
         <React.Fragment>
