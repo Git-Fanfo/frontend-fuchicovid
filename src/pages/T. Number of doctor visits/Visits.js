@@ -1,5 +1,5 @@
 import React from 'react'
-import EmployeeForm from "./VisitsTable";
+import VisitForm from "./VisitsTable";
 import PageHeader from "../../components/PageHeader";
 import TableChartIcon from '@material-ui/icons/TableChart';
 import { Paper,makeStyles } from '@material-ui/core';
@@ -23,7 +23,7 @@ export default function Visits() {
                 icon={<TableChartIcon fontSize="large" />}
             />
             <Paper className={classes.pageContent}>
-                <EmployeeForm />
+                <VisitForm />
             </Paper>
         </>
     )

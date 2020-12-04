@@ -16,6 +16,7 @@ import MapView from "../components/Maps/MapView"
 import Average from "../pages/T. Average per neighborhood/Average"
 import Age from "../pages/T. Age of patients/Age"
 import Visits from "../pages/T. Number of doctor visits/Visits"
+import Inventory from "../pages/T. Inventory/Inventory"
 import NewEntry from "../pages/New Entry/NewEntry"
 import ConsultRelatives from "../pages/T. ConsultRelative/ConsultRel"
 
@@ -84,6 +85,7 @@ function App() {
           <Route path="/average-table" component={Average}/>
           <Route path="/age-table" component={Age}/>
           <Route path="/visits-table" component={Visits}/>
+          <Route path="/inventory-table" component={Inventory}/>
           <Route path="/new-entry" component={NewEntry}/>
           <Route path="/consult-relatives" component={ConsultRelatives}/>
           

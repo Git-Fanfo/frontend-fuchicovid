@@ -1,5 +1,5 @@
 import React from 'react'
-import EmployeeForm from "./AverageTable";
+import AverageForm from "./AverageTable";
 import PageHeader from "../../components/PageHeader";
 import TableChartIcon from '@material-ui/icons/TableChart';
 import { Paper,makeStyles } from '@material-ui/core';
@@ -23,7 +23,7 @@ export default function Average() {
                 icon={<TableChartIcon fontSize="large" />}
             />
             <Paper className={classes.pageContent}>
-                <EmployeeForm />
+                <AverageForm />
             </Paper>
         </>
     )
