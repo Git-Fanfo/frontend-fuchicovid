@@ -64,16 +64,13 @@ const useStyles = makeStyles((theme) => ({
       minWidth: 750,
     },
     visuallyHidden: {
-      border: 0,
-      clip: 'rect(0 0 0 0)',
-      height: 1,
-      margin: -1,
-      overflow: 'hidden',
-      padding: 0,
-      position: 'absolute',
-      top: 20,
-      width: 1,
-    },
+        border: 0,
+        paddingLeft: '5%',
+        paddingTop: '5%',
+        paddingBottom: '5%',
+        position: 'auto',
+        top: 20,
+      }
   }));
 
 export default function DoctorForm() {
@@ -139,6 +136,7 @@ export default function DoctorForm() {
             let hora = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
             values.fecha = fecha;
             values.hora = hora;
+            values.id = parseInt(values.id)
             console.log(values)
             resetForm()            
         }
@@ -156,7 +154,7 @@ export default function DoctorForm() {
         >BACK
         </Button>
         <Form onSubmit={handleSubmit}>     
-            <Grid container>
+            <Grid container className={classes.visuallyHidden}>
                 <Grid item xs={6}>
                     <Controls.Input
                         name="nombre"
