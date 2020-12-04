@@ -32,9 +32,9 @@ const initialFValues = {
     //isPermanent: false,
     hora : '',
 
-    register_by : '_',
-    userName : '_',
-    password : '_'
+    register_by : '',
+    userName : '',
+    password : ''
 }
 /*
 "nombre": "Primera", 
@@ -184,17 +184,16 @@ export default function DoctorForm() {
                         value={values.id}
                         onChange={handleInputChange}
                         error={errors.id}
-                    />                  
-
-                </Grid>
-                <Grid item xs={6}>
+                    />
                     <Controls.Input                            
                         name="direccion"
                         label="Address"
                         value={values.direccion}
                         onChange={handleInputChange}
                         error={errors.direccion}
-                    />
+                    /> 
+                </Grid>
+                <Grid item xs={6}>
                     <Controls.Select
                         name="id_barrio"
                         label="Neighborhood"
@@ -218,6 +217,20 @@ export default function DoctorForm() {
                         onChange={handleInputChange}
                         options={eps}
                         error={errors.id_eps}
+                    />
+                    <Controls.Input                            
+                        name="userName"
+                        label="Username"
+                        value={values.userName}
+                        onChange={handleInputChange}
+                        error={errors.userName}
+                    />
+                    <Controls.Input                            
+                        name="password"
+                        label="Password"
+                        value={values.password}
+                        onChange={handleInputChange}
+                        error={errors.password}
                     />
                     <div>
                         <Controls.Button
