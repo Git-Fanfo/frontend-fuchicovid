@@ -25,6 +25,7 @@ export default function LobbyRegForm() {
     const TabAvg = useCallback(() => history.push('/average-table'), [history]); 
     const TabAge = useCallback(() => history.push('/age-table'), [history]); 
     const TabVst = useCallback(() => history.push('/visits-table'), [history]); 
+    const NewEnt = useCallback(() => history.push('/new-entry'), [history]); 
 
     const imprimirUsuario = () => console.log(loginService.getAllUsers())
 
@@ -71,7 +72,7 @@ export default function LobbyRegForm() {
                                 type="submit"
                                 text="New entry"
                                 fullWidth={true}
-                                onClick={imprimirUsuario}/>         
+                                onClick={NewEnt} />         
                     </Grid>
                     <Grid item xs={6}>
                     <h1  className={classes.title}>Contact Info.</h1>

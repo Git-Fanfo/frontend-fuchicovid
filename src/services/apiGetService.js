@@ -25,6 +25,32 @@ export const getCiudad = async ()=>{
     }
 }
 
+export const getEps = async ()=>{
+    try {
+        //console.log(config.body)
+        let res = await fetch('https://shrouded-bastion-95914.herokuapp.com/api/getEps')
+        let json = await res.json()
+        return json                               
+    } catch (error) {
+        //this.props.history.push('/')
+        return []
+        //console.log(error)                
+    }
+}
+
+export const getUniversidad = async ()=>{
+    try {
+        //console.log(config.body)
+        let res = await fetch('https://shrouded-bastion-95914.herokuapp.com/api/getUniversidad')
+        let json = await res.json()
+        return json                               
+    } catch (error) {
+        //this.props.history.push('/')
+        return []
+        //console.log(error)                
+    }
+}
+
 export const getParentesco = async ()=>{
     try {
         //console.log(config.body)
@@ -42,6 +68,19 @@ export const getProfesional = async ()=>{
     try {
         //console.log(config.body)
         let res = await fetch('https://shrouded-bastion-95914.herokuapp.com/api/getProfesional')
+        let json = await res.json()
+        return json                               
+    } catch (error) {
+        //this.props.history.push('/')
+        return []
+        //console.log(error)                
+    }
+}
+
+export const getMedicamento = async ()=>{
+    try {
+        //console.log(config.body)
+        let res = await fetch('https://shrouded-bastion-95914.herokuapp.com/api/getMedicamento')
         let json = await res.json()
         return json                               
     } catch (error) {

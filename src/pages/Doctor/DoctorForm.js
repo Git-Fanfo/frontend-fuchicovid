@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { Grid, } from '@material-ui/core';
 import Controls from "../../components/controls/Controls";
 import { useForm, Form } from '../../components/useForm';
-import * as employeeService from "../../services/employeeService";
+
 
 import Paper from '@material-ui/core/Paper';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -83,15 +83,18 @@ export default function DoctorForm() {
     const goBack = useCallback(() => history.push('/lobby-service'), [history]);
 
     const [barrios,setBarrios] = useState([])
-    //otros
+    const [universidad,setUniversidad] = useState([])
+    const [eps,setEps] = useState([])
+
     useEffect(() => {
         async function fetchData() {
           // You can await here
           setBarrios(await apiGetService.getBarrio())
-          //a
+          setUniversidad(await apiGetService.getUniversidad())
+          setEps(await apiGetService.getEps())
         }
         fetchData();
-      }, []);
+      }, []); 
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -102,7 +105,7 @@ export default function DoctorForm() {
         if ('id_universidad' in fieldValues)
             temp.id_universidad = (/$^|.+@.+..+/).test(fieldValues.id_universidad) ? "" : "id_universidad is not valid."
         if ('id' in fieldValues)
-            temp.id = !isNaN(parseInt(fieldValues.id, 10)) ? fieldValues.id.length > 9 ? "" : "Minimum 10 numbers required" : "Numbers only."
+            temp.id = fieldValues.id.length > 9 ? "" : "Minimum 10 numbers required."
         if ('direccion' in fieldValues)
             temp.direccion = fieldValues.direccion ? "" : "This field is required."            
         if ('id_universidad' in fieldValues)
@@ -188,12 +191,12 @@ export default function DoctorForm() {
                 </Grid>
                 <Grid item xs={6}>
                     <Controls.Input                            
-                            name="direccion"
-                            label="Address"
-                            value={values.direccion}
-                            onChange={handleInputChange}
-                            error={errors.direccion}
-                        />
+                        name="direccion"
+                        label="Address"
+                        value={values.direccion}
+                        onChange={handleInputChange}
+                        error={errors.direccion}
+                    />
                     <Controls.Select
                         name="id_barrio"
                         label="Neighborhood"
@@ -202,22 +205,22 @@ export default function DoctorForm() {
                         options={barrios}
                         error={errors.id_barrio}
                     />
-                    <Controls.Input
-                            name="id_universidad"
-                            label="College"
-                            value={values.id_universidad}
-                            onChange={handleInputChange}
-                            error={errors.id_universidad}
-                        />                    
+                    <Controls.Select
+                        name="id_universidad"
+                        label="College"
+                        value={values.id_universidad}
+                        onChange={handleInputChange}
+                        options={universidad}
+                        error={errors.id_universidad}
+                    />                      
                     <Controls.Select
                         name="id_eps"
                         label="EPS"
                         value={values.id_eps}
                         onChange={handleInputChange}
-                        options={employeeService.getEPS()}
+                        options={eps}
                         error={errors.id_eps}
                     />
-
                     <div>
                         <Controls.Button
                             type="submit"
@@ -236,6 +239,39 @@ export default function DoctorForm() {
 }
 
 /*
+
+<Controls.Select
+                        name="id_barrio"
+                        label="Neighborhood"
+                        value={values.id_barrio}
+                        onChange={handleInputChange}
+                        options={employeeService.getDepartmentCollection()}
+                        error={errors.id_barrio}
+                    />
+
+<Controls.Select
+                        name="id_eps"
+                        label="EPS"
+                        value={values.id_eps}
+                        onChange={handleInputChange}
+                        options={employeeService.getEPS()}
+                        error={errors.id_eps}
+                    />
+
+
+
+<Controls.Select
+                        name="id_medicamento"
+                        label="Medicine"
+                        value={values.id_medicamento}
+                        onChange={handleInputChange}
+                        options={medicamentos}
+                        error={errors.id_medicamento}
+                    /> 
+
+
+
+
 
                     <Controls.Checkbox
                         name="isPermanent"

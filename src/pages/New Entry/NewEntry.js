@@ -1,5 +1,5 @@
 import React from 'react'
-import DoctorForm from "./DoctorForm";
+import NewEntryReg from "./NewEntryForm";
 import PageHeader from "../../components/PageHeader";
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import { Paper,makeStyles } from '@material-ui/core';
@@ -11,19 +11,19 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-export default function Doctors() {
+export default function NewEntry() {
 
     const classes = useStyles();
 
     return (
         <>
             <PageHeader
-                title="Register a Doctor"
+                title="Login forms"
                 subTitle="Fill all the blanks"
                 icon={<LocalHospitalIcon fontSize="large" />}
             />
             <Paper className={classes.pageContent}>
-                <DoctorForm />
+                <NewEntryReg />
             </Paper>
         </>
     )
