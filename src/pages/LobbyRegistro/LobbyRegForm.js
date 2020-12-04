@@ -26,17 +26,47 @@ export default function LobbyRegForm() {
     const TabAge = useCallback(() => history.push('/age-table'), [history]); 
     const TabVst = useCallback(() => history.push('/visits-table'), [history]); 
     const NewEnt = useCallback(() => history.push('/new-entry'), [history]); 
+    const map = useCallback(() => history.push('/map'), [history]); 
 
     const imprimirUsuario = () => console.log(loginService.getAllUsers())
+    const [register, setRegister] = useState(<Grid container spacing={3}>                    
+        <Grid item xs={6}>
+        <Controls.Button
+                    type="submit"
+                    text="Register an Infected Patient"
+                    fullWidth={true}
+                    onClick={RegPac} />
+        </Grid>
+        <Grid item xs={6}>
+        <Controls.Button
+                    type="submit"
+                    text="Register a Doctor"
+                    fullWidth={true}
+                    onClick={RegDoc}/>
+        </Grid>
+    </Grid>)
 
-    const [buttonRegDoc,setbuttonRegDoc] = useState(<Controls.Button
-                                                type="submit"
-                                                text="Register a Doctor"
-                                                fullWidth={true}
-                                                onClick={RegDoc}/>)
+    const [entry,setEntry] = useState(<Controls.Button
+                                    type="submit"
+                                    text="New entry"
+                                    fullWidth={true}
+                                    onClick={NewEnt} />)
+    
+    const [contact, setContact] = useState(<Controls.Button
+                                    type="submit"
+                                    text="See additional information"
+                                    color="secondary"
+                                    fullWidth={true}/>)
+    const [inventory, setInventory] = useState(<Controls.Button
+                                        type="submit"
+                                        text="View Inventory"
+                                        color="secondary"
+                                        fullWidth={true}/>)
+                                    
     const classes = useStyles();
 
     //Aqui lo de usuarios
+    //aqui -> {(test) ? buttonRegDoc : <div></div>}
     let test = true;
 
     return (
@@ -51,36 +81,18 @@ export default function LobbyRegForm() {
                 BACK
             </Button>
             <h1  className={classes.title}>Person Registration</h1>
-            <Grid container spacing={3}>                    
-                    <Grid item xs={6}>
-                    <Controls.Button
-                                type="submit"
-                                text="Register an Infected Patient"
-                                fullWidth={true}
-                                onClick={RegPac} />
-                    </Grid>
-                    <Grid item xs={6}>
-                         {(test) ? buttonRegDoc : <div></div>}
-                    </Grid>
-                </Grid>
+            {(test) ? register : <p>Access denied</p>}
             
             <Grid container spacing={3}>
             
                     <Grid item xs={6}>
-                    <h1  className={classes.title}>Record of visits</h1>
-                    <Controls.Button
-                                type="submit"
-                                text="New entry"
-                                fullWidth={true}
-                                onClick={NewEnt} />         
+                    <h1  className={classes.title}>Record of visits</h1>                    
+                        {(!test) ? entry : <p>Access denied</p>}
                     </Grid>
                     <Grid item xs={6}>
                     <h1  className={classes.title}>Contact Info.</h1>
-                    <Controls.Button
-                                type="submit"
-                                text="See additional information"
-                                color="secondary"
-                                fullWidth={true}/>         
+                        {(!test) ? contact : <p>Access denied</p>}
+                         
                     </Grid>
             </Grid>
             <h1  className={classes.title}>Reports</h1>
@@ -107,6 +119,20 @@ export default function LobbyRegForm() {
                                 onClick={TabVst} />
                     </Grid>
                 </Grid>
+                <Grid container spacing={3}>            
+                    <Grid item xs={6}>
+                    <h1  className={classes.title}>Stadistics</h1>                    
+                        <Controls.Button
+                                    type="submit"
+                                    text="View map"
+                                    fullWidth={true}
+                                    onClick={map} />
+                    </Grid>
+                    <Grid item xs={6}>
+                    <h1  className={classes.title}>Inventory.</h1>
+                        {(!test) ? inventory : <p>Access denied</p>}                         
+                    </Grid>
+            </Grid>
             </React.Fragment>
     )
 }

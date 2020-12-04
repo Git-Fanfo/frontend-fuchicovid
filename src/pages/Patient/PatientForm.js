@@ -12,6 +12,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import * as apiGetService from "../../services/apiGetService";
+import * as loginService from "../../services/loginService";
 
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -40,7 +41,7 @@ const initialFValues = {
     long: '',
     fecha: '',
     hora : '',
-    register_by : 'admin',
+    register_by : 'Admin-01',
     edad: '',
     num_habitantes: '',
     id_profesional:'',
@@ -293,8 +294,92 @@ export default function PatientForm() {
         resetForm
     } = useForm(initialFValues, true, validate);
 
-    const handleSubmit = e => {
+
+    const   handleSubmit = async e => {
+        
+        e.preventDefault()
+            let today = new Date();
+
+            let nombre = 'Admin-01'
+            console.log(loginService.getAllUsers())
+            /*
+            try{
+                    nombre = loginService.getAllUsers().user_name
+                }
+                catch{
+                    nombre = 'Admin-01'
+                }
+            */
+                
+                
+        if (validate() && checkQueue() && checkQueueMail() && checkQueueRel()){
+            try {        
+                let fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                let hora = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    
+                let datos = []
+                datos.push({
+                    id:values.id,
+                    tipo_id: values.tipo_id,
+                    nombre: values.nombre, 
+                    apellido: values.apellido,
+                    fecha: fecha,
+                    hora: hora, 
+                    direccion: values.direccion, 
+                    id_barrio:values.id_barrio, 
+                    register_by:nombre, 
+                    edad: parseInt(values.edad, 10),
+                    lat:parseFloat((getRandomArbitrary(-7651282, -7649471)/100000).toFixed(9)),
+                    long:parseFloat((getRandomArbitrary(342417, 345648)/100000).toFixed(9)),
+                    id_profesional:values.id_profesional,
+                    num_habitantes:parseInt(values.num_habitantes,10),
+                    ciudad_contagio:values.ciudad_contagio
+                })
+                //lat:parseFloat((getRandomArbitrary(342417, 345648)/100000).toFixed(9)),
+                //long:parseFloat((getRandomArbitrary(-7651282, -7649471)/100000).toFixed(9)),
+                datos.push(numeros)
+                datos.push(mail)
+                datos.push(pariente)
+                
+
+                let config = {
+                    method:'POST',
+                    headers:{
+                        'Accept':'application/json',
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify(datos)
+                }
+                //console.log(config.body)
+                let res = await fetch('https://shrouded-bastion-95914.herokuapp.com/api/insertarPaciente', config)
+                let json = await res.json()
+
+                console.log(json)
+                resetForm()        
+                goBack()                               
+            } catch (error) {
+                //this.props.history.push('/')
+                console.log('ohno :o')
+                //console.log(error)                
+            }
+        //console.log(this.state)
+        }
+    }
+
+
+/*
+const handleSubmit = e => {
         let today = new Date();
+
+        let nombre = 'Admin-01'
+            console.log(loginService.getAllUsers())
+            try{
+                nombre = loginService.getAllUsers().user_name
+            }
+            catch{
+                nombre = 'INTRUSO'
+            }
+
         e.preventDefault()
         if (validate() && checkQueue() && checkQueueMail() && checkQueueRel()){            // 
             let fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -310,7 +395,7 @@ export default function PatientForm() {
                 hora: hora, 
                 direccion: values.direccion, 
                 id_barrio:values.id_barrio, 
-                register_by:values.register_by, 
+                register_by:nombre, 
                 edad: parseInt(values.edad, 10),
                 lat:parseFloat((getRandomArbitrary(342417, 345648)/100000).toFixed(9)),
                 long:parseFloat((getRandomArbitrary(-7651282, -7649471)/100000).toFixed(9)),
@@ -327,6 +412,8 @@ export default function PatientForm() {
             goBack()    
         }
     }
+*/
+    
 
     return (
         <div className={classes.root}>

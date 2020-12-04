@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback,useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -20,6 +20,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import * as apiGetService from "../../services/apiGetService";
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {Button} from '@material-ui/core'
@@ -29,20 +30,7 @@ function createData(age, numberofpatients) {
   return { age, numberofpatients};
 }
 
-const rows = [
-  createData(23, 1),
-  createData(15, 2),
-  createData(41, 3),
-  createData(30, 4),
-  createData(56, 5),
-  createData(40, 4),
-  createData(37, 3),
-  createData(89, 2),
-  createData(18, 1),
-  createData(32, 6),
-  createData(31, 7),
-  createData(60, 8),
-  createData(43, 9),
+let rows = [
 ];
 
 function descendingComparator(a, b, orderBy) {
@@ -178,6 +166,17 @@ export default function EnhancedTable() {
   
   const history = useHistory();
   const goBack = useCallback(() => history.push('/lobby-service'), [history]);
+
+  const [avg,setAvg] = useState([])
+
+  useEffect(() => {
+      async function fetchData() {
+        setAvg(await apiGetService.getAvgAge())
+      }
+      fetchData();
+    }, []); 
+  //HERE
+  rows = avg
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';

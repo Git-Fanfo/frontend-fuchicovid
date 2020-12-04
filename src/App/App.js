@@ -11,7 +11,7 @@ import Doctors from "../pages/Doctor/Doctor";
 import LoginProps from "../pages/LoginProps/Login"
 import LobbyRegistro from "../pages/LobbyRegistro/LobbyReg"
 import Patients from "../pages/Patient/Patient"
-import Average2 from "../pages/Average/Average"
+import Map from "../pages/Map/Map"
 import MapView from "../components/Maps/MapView"
 import Average from "../pages/T. Average per neighborhood/Average"
 import Age from "../pages/T. Age of patients/Age"
@@ -79,7 +79,7 @@ function App() {
           <Route path="/lobby-service" component={LobbyRegistro}/>
           <Route path="/register-doctor" component={Doctors}/>
           <Route path="/patient-register" component={Patients}/>
-          <Route path="/average-table2" component={Average2}/>
+          <Route path="/map" component={Map}/>
           <Route path="/average-table" component={Average}/>
           <Route path="/age-table" component={Age}/>
           <Route path="/visits-table" component={Visits}/>

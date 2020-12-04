@@ -12,6 +12,45 @@ export const getBarrio = async ()=>{
     }
 }
 
+export const getGeoplace = async ()=>{
+    try {
+        //console.log(config.body)
+        let res = await fetch('https://shrouded-bastion-95914.herokuapp.com/api/getGeoplace')
+        let json = await res.json()
+        return json                               
+    } catch (error) {
+        //this.props.history.push('/')
+        return []
+        //console.log(error)                
+    }
+}
+
+export const getAvgAge = async ()=>{
+    try {
+        //console.log(config.body)
+        let res = await fetch('https://shrouded-bastion-95914.herokuapp.com/api/getAvgEdad')
+        let json = await res.json()
+        return json                               
+    } catch (error) {
+        //this.props.history.push('/')
+        return []
+        //console.log(error)                
+    }
+}
+
+export const getAvgNeighborhood = async ()=>{
+    try {
+        //console.log(config.body)
+        let res = await fetch('https://shrouded-bastion-95914.herokuapp.com/api/getAvgNeighborhood')
+        let json = await res.json()
+        return json                               
+    } catch (error) {
+        //this.props.history.push('/')
+        return []
+        //console.log(error)                
+    }
+}
+
 export const getCiudad = async ()=>{
     try {
         //console.log(config.body)

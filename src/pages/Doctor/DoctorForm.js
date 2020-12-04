@@ -11,11 +11,12 @@ import {Button} from '@material-ui/core'
 import {useHistory} from 'react-router-dom';
 
 import * as apiGetService from "../../services/apiGetService";
+import * as loginService from "../../services/loginService";
 
 const type_idItems = [
-    { id: 'c.c.', title: 'C.C.' },
-    { id: 'c.e.', title: 'C.E.' },
-    { id: 't.i.', title: 'T.I.' },
+    { id: 'c.c.', title: 'C.C' },
+    { id: 'c.e.', title: 'C.E' },
+    { id: 't.i.', title: 'T.I' },
 ]
 
 const initialFValues = {
@@ -24,7 +25,7 @@ const initialFValues = {
     id_universidad: '',
     id: '',
     direccion: '',
-    tipo_id: 'C.C.',
+    tipo_id: 'C.C',
     id_barrio: '',
     id_eps: '',
     //Si queremos poner calendario al final, poner new Date aqui
@@ -32,7 +33,7 @@ const initialFValues = {
     //isPermanent: false,
     hora : '',
 
-    register_by : '',
+    register_by : 'Admin-01',
     userName : '',
     password : ''
 }
@@ -130,6 +131,16 @@ export default function DoctorForm() {
 
     const handleSubmit = e => {
         let today = new Date();
+
+        let nombre = 'Admin-01'
+            console.log(loginService.getAllUsers())
+            try{
+                nombre = loginService.getAllUsers().user_name
+            }
+            catch{
+                nombre = 'INTRUSO'
+            }
+
         e.preventDefault()
         if (validate()){            
             let fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -137,6 +148,7 @@ export default function DoctorForm() {
             values.fecha = fecha;
             values.hora = hora;
             values.id = parseInt(values.id)
+            values.register_by = nombre
             console.log(values)
             resetForm()            
         }
@@ -231,6 +243,7 @@ export default function DoctorForm() {
                         value={values.password}
                         onChange={handleInputChange}
                         error={errors.password}
+                        type="password"
                     />
                     <div>
                         <Controls.Button

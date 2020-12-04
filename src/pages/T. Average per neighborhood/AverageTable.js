@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback,useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -20,31 +20,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import * as apiGetService from "../../services/apiGetService";
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {Button} from '@material-ui/core'
 import {useHistory} from 'react-router-dom';
 
-function createData(neighborhood, average) {
-    //console.log({ name, calories, fat, carbs, protein })
-  return { neighborhood, average};
-}
-
-const rows = [
-  createData('San Fernando', 305),
-  createData('El Limonar', 452),
-  createData('Colseguros', 262),
-  createData('Caney', 159),
-  createData('Santa Monica', 356),
-  createData('La Flora', 408),
-  createData('Lili', 237),
-  createData('Versalles', 375),
-  createData('Pance', 518),
-  createData('Aguablanca', 392),
-  createData('Batallon', 318),
-  createData('Belalcazar', 360),
-  createData('Primero de Mayo', 437),
-];
+let rows = [];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -195,6 +177,17 @@ export default function EnhancedTable() {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const history = useHistory();
   const goBack = useCallback(() => history.push('/lobby-service'), [history]);
+  
+  const [avg,setAvg] = useState([])
+
+  useEffect(() => {
+      async function fetchData() {
+        setAvg(await apiGetService.getAvgNeighborhood())
+      }
+      fetchData();
+    }, []); 
+  //HERE
+  rows = avg
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
