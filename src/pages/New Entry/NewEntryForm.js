@@ -122,7 +122,6 @@ export default function NewEntryReg() {
                             datos.push({
                             id:values.id,
                             tipo_id: values.tipo_id,
-                            nombre: values.nombre, 
                             temperatura : values.temperatura,
                             peso : values.peso,  
                             observaciones : values.observaciones
