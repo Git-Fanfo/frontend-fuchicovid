@@ -27,6 +27,7 @@ export default function LobbyRegForm() {
     const TabVst = useCallback(() => history.push('/visits-table'), [history]); 
     const TabInv = useCallback(() => history.push('/inventory-table'), [history]); 
     const NewEnt = useCallback(() => history.push('/new-entry'), [history]);
+    const ConRel = useCallback(() => history.push('/consult-relatives'), [history]);
     const map = useCallback(() => history.push('/map'), [history]); 
 
     const imprimirUsuario = () => console.log(loginService.getAllUsers())
@@ -57,7 +58,8 @@ export default function LobbyRegForm() {
                                     type="submit"
                                     text="See additional information"
                                     color="secondary"
-                                    fullWidth={true}/>)
+                                    fullWidth={true}
+                                    onClick={ConRel} />)                                    
     const [inventory, setInventory] = useState(<Controls.Button
                                         type="submit"
                                         text="View Inventory"
