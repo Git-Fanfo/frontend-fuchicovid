@@ -6,10 +6,16 @@ import { useForm, Form } from '../../components/useForm';
 import Paper from '@material-ui/core/Paper';
 import { lighten, makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import {Button} from '@material-ui/core'
 import {useHistory} from 'react-router-dom';
 
 import * as apiGetService from "../../services/apiGetService";
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
 
 const type_idItems = [
     { id: 'c.c.', title: 'C.C' },
@@ -58,6 +64,7 @@ export default function NewEntryReg() {
     const classes = useStyles();
     const history = useHistory();
     const [open, setOpen] = React.useState(false);
+    const [counter, setCounter] = useState(0)
     const goBack = useCallback(() => history.push('/lobby-service'), [history]);
 
     const [medicamentos,setMedicamentos] = useState([])
@@ -73,17 +80,25 @@ export default function NewEntryReg() {
         medicamentoss.push({
             id_medicamento : values.id_medicamento,
             dosis : values.dosis })
+        setCounter(medicamentoss.length+' relative')
         abrirInsertado()
     }  
 
     const abrirInsertado = () => {
         setOpen(true);
     };
+    
+    const cerrarInsertado = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setOpen(false);
+      };
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
         if ('id' in fieldValues)
-            temp.id = !isNaN(parseInt(fieldValues.id, 10)) ? fieldValues.id.length > 9 ? "" : "Minimum 10 numbers required." : "Numbers only."
+            temp.id = !isNaN(parseInt(fieldValues.id, 10)) ? fieldValues.id.length > 6 ? "" : "Minimum 7 numbers required." : "Numbers only."
         if ('temperatura' in fieldValues)
             temp.temperatura = fieldValues.temperatura.length != 0 ? "" : "This field is required."            
         if ('peso' in fieldValues)
@@ -113,12 +128,13 @@ export default function NewEntryReg() {
         resetForm
     } = useForm(initialFValues, true, validate);
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         let today = new Date();
         e.preventDefault()
-        if (validate()){       
-            let fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-            let hora = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();    
+        if (validate()){     
+            try {    
+                let fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                let hora = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();    
                         let datos = []
                             datos.push({
                             id:parseInt(values.id),
@@ -130,11 +146,34 @@ export default function NewEntryReg() {
                             presion : values.presion,
                             observaciones : values.observaciones
                         })
-                        datos.push(medicamentoss); 
-                        console.log(datos);
-                        resetForm()
-                        }
-                    }            
+                        datos.push(medicamentoss);   
+                        //console.log(datos)    
+                let config = {
+                    method:'POST',
+                    headers:{
+                        'Accept':'application/json',
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify(datos)
+                }
+                //console.log(config.body)
+                let res = await fetch('https://shrouded-bastion-95914.herokuapp.com/api/insertarRegistro', config)
+                let json = await res.json()
+
+                if(json.length===0){
+                    //handleClick()                   
+                }else{      
+                    console.log(json)              
+                    resetForm()  
+                    goBack()                            
+                }                               
+                } catch (error) {
+                    //this.props.history.push('/')
+                    console.log('ohno :o')
+                    //console.log(error)                
+                }                            
+            }
+}            
 
 
     return (
@@ -230,6 +269,11 @@ export default function NewEntryReg() {
             </Grid>
         </Form>
     </Paper>
+    <Snackbar open={open} autoHideDuration={5000} onClose={cerrarInsertado}>
+                            <Alert onClose={cerrarInsertado} severity="success">
+                            Added {counter}!
+                            </Alert>
+                        </Snackbar>
     </div>
     )
 }

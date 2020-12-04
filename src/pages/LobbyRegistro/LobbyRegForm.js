@@ -27,7 +27,24 @@ export default function LobbyRegForm() {
     const TabVst = useCallback(() => history.push('/visits-table'), [history]); 
     const TabInv = useCallback(() => history.push('/inventory-table'), [history]); 
     const NewEnt = useCallback(() => history.push('/new-entry'), [history]);
+    const ConRel = useCallback(() => history.push('/consult-relatives'), [history]);
     const map = useCallback(() => history.push('/map'), [history]); 
+    const goToHornyJail = useCallback(() => history.push('/login'), [history]);
+
+    let test = false;
+    let nombre = ''
+    console.log(loginService.getAllUsers())
+
+    nombre = loginService.getAllUsers().privilege
+    
+    if(nombre == 'High')
+    test = true
+
+    if(nombre == 'Medium')
+    test = false
+
+    if(nombre == undefined)
+    goToHornyJail()
 
     const imprimirUsuario = () => console.log(loginService.getAllUsers())
     const [register, setRegister] = useState(<Grid container spacing={3}>                    
@@ -57,7 +74,8 @@ export default function LobbyRegForm() {
                                     type="submit"
                                     text="See additional information"
                                     color="secondary"
-                                    fullWidth={true}/>)
+                                    fullWidth={true}
+                                    onClick={ConRel} />)                                    
     const [inventory, setInventory] = useState(<Controls.Button
                                         type="submit"
                                         text="View Inventory"
@@ -69,7 +87,7 @@ export default function LobbyRegForm() {
 
     //Aqui lo de usuarios
     //aqui -> {(test) ? buttonRegDoc : <div></div>}
-    let test = true;//<-false para doctor
+    
 
     return (
         <React.Fragment>

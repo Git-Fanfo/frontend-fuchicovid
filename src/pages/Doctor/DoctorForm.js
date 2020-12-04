@@ -37,22 +37,7 @@ const initialFValues = {
     userName : '',
     password : ''
 }
-/*
-"nombre": "Primera", 
-"apellido":"Prueba",
-"id_universidad":300, 
-"id": 333333333,
-"direccion":"Calle nunca 777",
-"tipo_id": 100, 
-"id_barrio":200, 
-"id_eps":400,
-"fecha":"15/05/20", 
-"hora":"22:22:22",
 
-"register_by":"Admin-01", 
-"userName":"PP-01",
-"password":"contra_01"
-*/
 const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
@@ -103,7 +88,7 @@ export default function DoctorForm() {
         if ('id_universidad' in fieldValues)
             temp.id_universidad = (/$^|.+@.+..+/).test(fieldValues.id_universidad) ? "" : "id_universidad is not valid."
         if ('id' in fieldValues)
-            temp.id = fieldValues.id.length > 9 ? "" : "Minimum 10 numbers required."
+            temp.id = fieldValues.id.length > 6 ? "" : "Minimum 7 numbers required."
         if ('direccion' in fieldValues)
             temp.direccion = fieldValues.direccion ? "" : "This field is required."            
         if ('id_universidad' in fieldValues)
@@ -129,28 +114,44 @@ export default function DoctorForm() {
         resetForm
     } = useForm(initialFValues, true, validate);
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         let today = new Date();
-
         let nombre = 'Admin-01'
-            console.log(loginService.getAllUsers())
-            try{
-                nombre = loginService.getAllUsers().user_name
-            }
-            catch{
-                nombre = 'INTRUSO'
-            }
 
         e.preventDefault()
-        if (validate()){            
+        if (validate()){               
+            try {
             let fecha = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
             let hora = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
             values.fecha = fecha;
             values.hora = hora;
             values.id = parseInt(values.id)
             values.register_by = nombre
-            console.log(values)
-            resetForm()            
+            console.log(values)     
+            let config = {
+                method:'POST',
+                headers:{
+                    'Accept':'application/json',
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify(values)
+            }
+            //console.log(config.body)
+            let res = await fetch('https://shrouded-bastion-95914.herokuapp.com/api/insertarProfesional', config)
+            let json = await res.json()
+
+            if(json.length===0){
+                //handleClick()                   
+            }else{      
+                console.log(json)              
+                resetForm()  
+                goBack()                            
+            }                               
+            } catch (error) {
+                //this.props.history.push('/')
+                console.log('ohno :o')
+                //console.log(error)                
+            }       
         }
     }
 

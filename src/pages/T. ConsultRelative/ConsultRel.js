@@ -18,8 +18,8 @@ export default function Age() {
     return (
         <>
             <PageHeader
-                title="Age of patients"
-                subTitle="View the data in a table"
+                title="Contact a relative"
+                subTitle="Consult info given a pacient."
                 icon={<TableChartIcon fontSize="large" />}
             />
             <Paper className={classes.pageContent}>

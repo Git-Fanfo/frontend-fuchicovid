@@ -18,7 +18,7 @@ export default function NewEntry() {
     return (
         <>
             <PageHeader
-                title="Login forms"
+                title="New entry"
                 subTitle="Fill all the blanks"
                 icon={<LocalHospitalIcon fontSize="large" />}
             />

@@ -1,10 +1,6 @@
 import React from 'react';
-//import React, { useState } from 'react';
 import './App.css';
-//import SideMenu from "../components/SideMenu";
 import { makeStyles, CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
-//import Header from "../components/Header";
-//import PageHeader from '../components/PageHeader';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Doctors from "../pages/Doctor/Doctor";
@@ -12,7 +8,6 @@ import LoginProps from "../pages/LoginProps/Login"
 import LobbyRegistro from "../pages/LobbyRegistro/LobbyReg"
 import Patients from "../pages/Patient/Patient"
 import Map from "../pages/Map/Map"
-import MapView from "../components/Maps/MapView"
 import Average from "../pages/T. Average per neighborhood/Average"
 import Age from "../pages/T. Age of patients/Age"
 import Visits from "../pages/T. Number of doctor visits/Visits"
@@ -49,7 +44,6 @@ const theme = createMuiTheme({
   }
 })
 
-
 const useStyles = makeStyles({
   appMain: {
     //paddingLeft: '320px',
@@ -59,22 +53,12 @@ const useStyles = makeStyles({
 })
 
 function App() {
-
   //setView(state.login+1);
   const classes = useStyles();
-
   return (
     <ThemeProvider theme={theme}>
-      {/*<SideMenu />
-      <Header />
-      <Login/>
-        <Employees />
-        <Route path="/map" component={MapView}/>*/}
       <div className={classes.appMain}>
-        
-        
       </div>
-
       <BrowserRouter>
         <Switch>
           <Route path="/login" component={LoginProps}/>
@@ -87,13 +71,10 @@ function App() {
           <Route path="/visits-table" component={Visits}/>
           <Route path="/inventory-table" component={Inventory}/>
           <Route path="/new-entry" component={NewEntry}/>
-          <Route path="/consult-relatives" component={ConsultRelatives}/>
-          
-          
+          <Route path="/consult-relatives" component={ConsultRelatives}/>                   
           <Route component={LoginProps}/>
         </Switch>
       </BrowserRouter>
-
       <CssBaseline />
     </ThemeProvider>
   );

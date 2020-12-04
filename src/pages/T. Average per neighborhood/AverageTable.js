@@ -69,7 +69,6 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -99,7 +98,6 @@ function EnhancedTableHead(props) {
 
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
-//  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
@@ -262,7 +260,6 @@ export default function EnhancedTable() {
           >
             <EnhancedTableHead
               classes={classes}
-//              numSelected={selected.length}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
@@ -286,8 +283,7 @@ export default function EnhancedTable() {
                       key={row.neighborhood}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
-                        
+                      <TableCell padding="checkbox">                        
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.neighborhood}

@@ -43,17 +43,17 @@ const tipo_idItems = [
   { id: 't.i.', title: 'T.I' },
 ]
 const initialFValues = {
-  nombre: '',
+  id: '',
   tipo_id: '',
 }
 /////
-function createData(nombre, numero, email) {
-  return { nombre, numero, email};
+function createData(id, nombre, numero, email) {
+  return { id, nombre, numero, email};
 }
 
-let rows = [
-  createData('juanito','1234','aaaaaaaaa')
-];
+//let rows = [
+//  createData('juanito','1234','aaaaaaaaa')//{nombre: juanito, numero:1234, email:aaaaaaaaaa},
+//];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -83,6 +83,7 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
+  { id: 'id', numeric: false, disablePadding: true, label: 'Id' },
   { id: 'nombre', numeric: false, disablePadding: true, label: 'Name' },
   { id: 'numero', numeric: false, disablePadding: false, label: 'Number' },
   { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
@@ -181,6 +182,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function EnhancedTable() {
   //////////
+  const [rows, setRows] = useState([])
   const history = useHistory();
   const redirect = useCallback(() => history.push('/lobby-service'), [history]);
 
@@ -201,8 +203,8 @@ export default function EnhancedTable() {
     let temp = { ...errors }        
     //console.log(fieldValues.userName)
     //console.log(loginService.getLogin())
-    if ('nombre' in fieldValues)
-        temp.nombre = fieldValues.nombre ? "" : "Please enter a valid username."
+    if ('id' in fieldValues)
+        temp.id = fieldValues.id ? "" : "Please enter a valid username."
     if ('tipo_id' in fieldValues)
         temp.tipo_id = fieldValues.tipo_id ? "" : "Please enter a valid password." 
     //Aqui revisa si existe el usuario  
@@ -225,11 +227,15 @@ const {
     resetForm
 } = useForm(initialFValues, true, validate);
 
+const [avg,setAvg] = useState([])
+
+
 const   handleSubmit = async e => {
     
     e.preventDefault()
     if (validate()){
-        try {          
+        try {        
+          console.log(values)  
             let config = {
                 method:'PUT',
                 headers:{
@@ -239,15 +245,27 @@ const   handleSubmit = async e => {
                 body: JSON.stringify(values)
             }
             //console.log(config.body)
-            let res = await fetch('https://shrouded-bastion-95914.herokuapp.com/api/login', config)
+            let res = await fetch('https://shrouded-bastion-95914.herokuapp.com/api/pacienteContact', config)
             let json = await res.json()
 
             if(json.length===0){
                 showAlert()                   
-            }else{                    
-                loginService.insertLog(json[0])
-                resetForm()  
-                redirect()                            
+            }else{       
+              let temp = []
+              for(let i = 0; i<json[0].length;i++){
+                temp.push(createData(i,json[0][i],json[1][i],json[2][i]) )
+                //resetForm()  
+              }  
+              console.log('temp',temp[0]  )  
+              for(let i = 0;i<temp.length;i++){
+                setRows(temp[i])
+              }
+              console.log('rwos',rows  ) 
+              console.log('temp',temp  )
+              
+
+              //rows = temp
+              console.log('rwos',rows  )                       
             }                               
         } catch (error) {
             //this.props.history.push('/')
@@ -270,16 +288,7 @@ const   handleSubmit = async e => {
   //const history = useHistory();
   const goBack = useCallback(() => history.push('/lobby-service'), [history]);
 
-  const [avg,setAvg] = useState([])
-
-  useEffect(() => {
-      async function fetchData() {
-        setAvg(await apiGetService.getAvgAge())
-      }
-      fetchData();
-    }, []); 
-  //HERE
-  //  rows = avg
+  
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -347,28 +356,28 @@ const   handleSubmit = async e => {
             <Grid container justify="center">
                 <Grid item xs={6}>
                     <Controls.Input
-                        name="nombre"
-                        label="Nombre"
-                        value={values.nombre}
+                        name="id"
+                        label="ID"
+                        value={values.id}
                         onChange={handleInputChange}
-                        error={errors.nombre}
+                        error={errors.id}
                     />
-                    <Controls.Input
+                    <Controls.RadioGroup
                         name="tipo_id"
-                        label="tipo_id"
+                        label="Type ID"
                         value={values.tipo_id}
                         onChange={handleInputChange}
-                        error={errors.tipo_id}
-                    />              
+                        items={tipo_idItems}
+                    />            
 
                     <div>
                         <Controls.Button
                             type="submit"
-                            text="Login"                        
+                            text="Search"                        
                              />
                         <Snackbar open={open} autoHideDuration={5000} onClose={hideAlert}>
                             <Alert onClose={hideAlert} severity="error">
-                            User not found
+                            Didn't find a patient with the given ID.
                             </Alert>
                         </Snackbar>
                     </div>
@@ -408,14 +417,15 @@ const   handleSubmit = async e => {
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.nombre}
+                      key={row.id}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
                         
                       </TableCell>
+                      <TableCell align="left">{row.id}</TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.nombre}
+                        {row.id}
                       </TableCell>
                       <TableCell align="left">{row.numero}</TableCell>
                       <TableCell align="left">{row.email}</TableCell>

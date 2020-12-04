@@ -67,8 +67,7 @@ export default function LoginForm() {
         resetForm
     } = useForm(initialFValues, true, validate);
 
-    const   handleSubmit = async e => {
-        
+    const   handleSubmit = async e => {        
         e.preventDefault()
         if (validate()){
             try {          
@@ -149,11 +148,7 @@ const handleSubmit = e => {
                             User not found
                             </Alert>
                         </Snackbar>
-                        <Controls.Button
-                            text="See Data"
-                            color="default"
-                            color="secondary"
-                            />
+                        
                     </div>
                 </Grid>
                 

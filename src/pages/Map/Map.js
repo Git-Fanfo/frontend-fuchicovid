@@ -27,8 +27,8 @@ export default function Employees() {
     return (
         <>
             <PageHeader
-                title="Average by Neighborhood"
-                subTitle="View the data in a table"
+                title="Cali infected map"
+                subTitle="Pacients spreaded out"
                 icon={<TableChartIcon fontSize="large" />}
             />
             <Paper className={classes.pageContent}>

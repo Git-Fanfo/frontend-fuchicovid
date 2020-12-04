@@ -30,8 +30,8 @@ function createData(medicine, u_Synlab, u_Tecnoquimicas, u_Procaps, u_Quifarmed)
 }
 
 const rows = [
-  createData('Medicamento 1', 1, 2, 3, 4),
-  createData('Medicamento 2', 2, 4, 6, 8),
+  createData('Medicamento 1', 1, 4, 3, 4),
+  createData('Medicamento 2', 2, 2, 6, 8),
   createData('Medicamento 3', 3, 6, 9, 12),
 ];
 
@@ -63,10 +63,10 @@ function stableSort(array, comparator) {
 
 const headCells = [
   { id: 'medicine', numeric: false, disablePadding: true, label: 'Name of the medicine' },
-  { id: 'synlab', numeric: false, disablePadding: false, label: 'Synlab' },
-  { id: 'tecnoquimicas', numeric: false, disablePadding: false, label: 'Tecnoquimicas' },
-  { id: 'procaps', numeric: false, disablePadding: false, label: 'Procaps' },
-  { id: 'quifarmed', numeric: false, disablePadding: false, label: 'Quifarmed' },
+  { id: 'u_Synlab', numeric: false, disablePadding: false, label: 'Synlab' },
+  { id: 'u_Tecnoquimicas', numeric: false, disablePadding: false, label: 'Tecnoquimicas' },
+  { id: 'u_Procaps', numeric: false, disablePadding: false, label: 'Procaps' },
+  { id: 'u_Quifarmed', numeric: false, disablePadding: false, label: 'Quifarmed' },
 ];
 
 function EnhancedTableHead(props) {
@@ -178,7 +178,7 @@ export default function EnhancedTable() {
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.age);
+      const newSelecteds = rows.map((n) => n.name);
       setSelected(newSelecteds);
       return;
     }
@@ -267,8 +267,9 @@ export default function EnhancedTable() {
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox"></TableCell>
-                        
-                      <TableCell align="left">{row.medicine}</TableCell>
+                      <TableCell component="th" id={labelId} scope="row" padding="none">
+                        {row.medicine}
+                      </TableCell>
                       <TableCell align="left">{row.u_Synlab}</TableCell>
                       <TableCell align="left">{row.u_Tecnoquimicas}</TableCell>
                       <TableCell align="left">{row.u_Procaps}</TableCell>
