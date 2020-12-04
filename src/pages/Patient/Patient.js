@@ -25,7 +25,6 @@ export default function Patients() {
             />
             <Paper className={classes.pageContent}>
                 <PatientForm/>
-
             </Paper>
         </>
     )

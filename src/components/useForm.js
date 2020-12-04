@@ -23,6 +23,11 @@ export function useForm(initialFValues, validateOnChange = false, validate) {
         setErrors({})
     }
 
+    const resetFormP = () => {
+        //console.log("reset to: ",initialFValues)
+        setValues(initialFValues);
+        setErrors({})
+    }
 
     return {
         values,

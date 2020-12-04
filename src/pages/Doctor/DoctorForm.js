@@ -102,7 +102,7 @@ export default function DoctorForm() {
         if ('id_universidad' in fieldValues)
             temp.id_universidad = (/$^|.+@.+..+/).test(fieldValues.id_universidad) ? "" : "id_universidad is not valid."
         if ('id' in fieldValues)
-            temp.id = fieldValues.id.length > 9 ? "" : "Minimum 10 numbers required."
+            temp.id = !isNaN(parseInt(fieldValues.id, 10)) ? fieldValues.id.length > 9 ? "" : "Minimum 10 numbers required" : "Numbers only."
         if ('direccion' in fieldValues)
             temp.direccion = fieldValues.direccion ? "" : "This field is required."            
         if ('id_universidad' in fieldValues)
