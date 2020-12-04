@@ -1,3 +1,27 @@
+/* FORMATO DE ENTRADA
+[
+	{
+		"id": 333333333,
+		"tipo_id": 100, 
+		"fecha":"15/05/20", 
+		"hora":"33:33:33", 
+		"temperatura":"40°C", 
+		"peso":"76 Kg", 
+		"presion":"105/85 mmHg", 
+		"observaciones":"Expresa cansancio y sueño constante"
+	},
+	[
+		{
+			"id_medicamento":600,
+			"dosis":"Cada 8h"
+		},
+		{
+			"id_medicamento":601,
+			"dosis":"1 Diaria"
+		}
+	]
+]
+*/
 import React, { useState, useEffect, useCallback } from 'react'
 import { Grid, } from '@material-ui/core';
 import Controls from "../../components/controls/Controls";
@@ -8,8 +32,14 @@ import { lighten, makeStyles } from '@material-ui/core/styles';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {Button} from '@material-ui/core'
 import {useHistory} from 'react-router-dom';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 import * as apiGetService from "../../services/apiGetService";
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+  }
 
 const tipo_idItems = [
     { id: 'c.c.', title: 'C.C' },
@@ -25,7 +55,7 @@ const initialFValues = {
     nombre: '',
     apellido: '',
     tipo_id: 'C.C',
-    id: 0,
+    id: '',
     id_barrio: '',
     direccion : '',
     companions : '',
@@ -35,12 +65,14 @@ const initialFValues = {
     fecha: '',
     hora : '',
     register_by : 'admin',
-    edad: 0,
-    num_habitantes: 0,
-    id_pariente:0,
-    tipo_id:101,
+    edad: '',
+    num_habitantes: '',
+    id_pariente:'',
+    tipo_idP:'C.C',
 	nombre_completo:'',
-	id_parentesco:''
+    id_parentesco:'',
+    numero:'',
+    email:'',
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -57,9 +89,17 @@ const useStyles = makeStyles((theme) => ({
     visuallyHidden: {
       border: 0,
       paddingLeft: '5%',
+      paddingTop: '5%',
+      paddingBottom: '5%',
       position: 'auto',
       top: 20,
     },
+    title: {
+        fontSize: '2em',
+        color: '#282c34',
+        //textAlign: 'center',
+        paddingTop: '1em',
+    }
   }));  
 
 export default function PatientForm() {
@@ -69,6 +109,9 @@ export default function PatientForm() {
     const goBack = useCallback(() => history.push('/lobby-service'), [history]);
 
     const [barrios,setBarrios] = useState([])
+    const [open, setOpen] = React.useState(false);
+    const [counter, setCounter] = useState(0)
+
     useEffect(() => {
         async function fetchData() {
           // You can await here
@@ -77,11 +120,37 @@ export default function PatientForm() {
         fetchData();
       }, []);
 
-      const addPariente = () => {
+    const addPariente = () => {
         pariente.push({
             nombre_completo:values.nombre_completo,
+            tipo_id:values.tipo_idP,
+            id_pariente:values.id_pariente,
+            id_parentesco:values.id_parentesco,
         })
+        abrirInsertado()
     }
+
+    const addNumber = () => {
+        numeros.push(values.numero)
+        setCounter(numeros.length)
+        abrirInsertado()
+    }
+
+    const addMail = () => {
+        mail.push(values.email)
+        abrirInsertado()
+    }
+
+    const abrirInsertado = () => {
+        setOpen(true);
+      };
+    
+    const cerrarInsertado = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+        setOpen(false);
+      };
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -164,7 +233,7 @@ export default function PatientForm() {
                   onClick={goBack}
         >BACK
         </Button>
-        <Form onSubmit={handleSubmit}> 
+        <Form onSubmit={handleSubmit}>             
             <Grid container className={classes.visuallyHidden}>
                 <Grid item xs={6}>
                     <Controls.Input
@@ -254,7 +323,40 @@ export default function PatientForm() {
                             onClick={resetForm}/>
                     </div>
                 </Grid>   
-                <Grid item xs={6}>
+                
+                <Grid container>
+                    <Grid item xs={6}>
+                    <h1  className={classes.title}>Add number {counter}</h1>
+                        <Controls.Input
+                            name="numero"
+                            label="Numero"
+                            value={values.numero}
+                            onChange={handleInputChange}
+                            error={errors.numero}
+                        />
+                        <Controls.Button
+                                text="Submit number"
+                                onClick={addNumber}/>     
+                        
+                    </Grid>                
+                    <Grid item xs={6}>
+                    <h1  className={classes.title}>Add mail</h1>
+                        <Controls.Input
+                            name="email"
+                            label="E-mail"
+                            value={values.email}
+                            onChange={handleInputChange}
+                            error={errors.email}
+                        />
+                        <Controls.Button
+                                text="Submit email"
+                                onClick={addMail} />                           
+                    </Grid>
+                </Grid>
+
+                <Grid container className={classes.visuallyHidden}>
+                <h1  className={classes.title}>Add relative</h1>
+                <Grid item xs={12}>
                     <Controls.Input
                         name="nombre_completo"
                         label="Name"
@@ -263,42 +365,41 @@ export default function PatientForm() {
                         error={errors.nombre_completo}
                     />
                     <Controls.Input
-                        name="apellido"
-                        label="Last Name"
-                        value={values.apellido}
+                        name="id_pariente"
+                        label="Identification Number"
+                        value={values.id_pariente}
                         onChange={handleInputChange}
-                        error={errors.apellido}
+                        error={errors.id_pariente}
                     />
                     <Controls.RadioGroup
-                        name="tipo_id"
+                        name="tipo_idP"
                         label="Type ID"
-                        value={values.tipo_id}
+                        value={values.tipo_idP}
                         onChange={handleInputChange}
                         items={tipo_idItems}
                     />
-                    
-                    <Controls.Input                    
-                        name="id"
-                        label="Identification Number"
-                        value={values.id}
-                        onChange={handleInputChange}
-                        error={errors.id}
-                    />   
                     <Controls.Select
-                        name="id_barrio"
-                        label="Neighborhood"
-                        value={values.id_barrio}
+                        name="id_parentesco"
+                        label="Relationship"
+                        value={values.id_parentesco}
                         onChange={handleInputChange}
                         options={barrios}
-                        error={errors.id_barrio}
+                        error={errors.id_parentesco}
                     />  
-                    <Controls.Button
+                    
+               </Grid>  
+               <Controls.Button
                             text="Submit"
-                            onClick={addPariente} />
-               </Grid>             
+                            onClick={addPariente} />     
+                            </Grid>      
             </Grid>
         </Form>
     </Paper>
+    <Snackbar open={open} autoHideDuration={5000} onClose={cerrarInsertado}>
+                            <Alert onClose={cerrarInsertado} severity="success">
+                                Added!
+                            </Alert>
+                        </Snackbar>
     </div>
     )
 }
